@@ -3,7 +3,7 @@
 - Clone & update submodules (themes)
 
     ```
-    $ git clone --recursive git@github.com:yuqingc/yuqingc.github.io.git
+    $ git clone --recursive git@github.com:yuqingc/homepage-src.git
     ```
 - Write new post
 
@@ -20,5 +20,5 @@
 - Build
 
     ```
-    $ hugo -d .
+    $ hugo -d
     ```
