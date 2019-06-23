@@ -205,6 +205,16 @@ result3 === result4 // true - 参数通过 lodash 的 isEqual 判断是相等的
 
 React 16.8 带来了全新的 Hook。Hook 为我们提供了原生的记忆化 API，我们可以使用 [useMemo](https://reactjs.org/docs/hooks-reference.html#usememo) 来实现上文所说的记忆化技术。具体用法请直接参考 API 文档。也可以阅读 Dan 的这篇文章：[Writing Resilient Components](https://overreacted.io/writing-resilient-components/)
 
+## 个人看法
+
+*闭包* 在函数式编程里面的确是不可或缺的一部分，把闭包函数当作值来进行传递可以让程序更加灵活。但是以上这种把函数局部变量保留的方式，我 **不认为** 是一种很好的编程范式，因为 Runtime 的 GC 在函数应该销毁时，不去回收这一部分的内存，很容易造成内存泄漏。
+
+在 Golang 中，也有类似的闭包概念，Golang 中允许在函数中返回局部变量的指针，GC 在函数返回之后不会回收被这个指针指向的内存，这往往被称作“变量逃逸”。而在 Rust 语言中，如果在在函数中返回一个局部变量的引用，编译器会直接报错。
+
+尽管灵活使用闭包可以使得代码更加简单，也会给初学者一种“高大上”的感觉，但是其实不用闭包也可以达到类似的效果（比如使用 class，让记忆化技术中部的缓存变量作为 class 的一个私有属性即可）。
+
+在实际工程中应该尽量减少使用 *局部变量逃逸* 的闭包函数，这样不但可以增加程序的可读性，而且可以更好的追踪 bug 的产生，最重要的是，使你的代码更安全。
+
 ## 参考资料
 
 - [You Probably Don't Need Derived State](https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#what-about-memoization)

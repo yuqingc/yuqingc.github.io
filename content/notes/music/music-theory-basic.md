@@ -161,6 +161,51 @@ E      G      B      D#
 |CM7|CM7/E|CM7/G|CM7/B|
 |CEGB|**E**GBC|**G**BCE|**B**CEG|
 
-TODO: 圆圈图、大小调、音阶等内容
+# 五度循环圈
 
+<div style="text-align:center"><img src="/images/circle-of-fifths.jpg" width="400px"/></div>
 
+# 各调式音级名称
+
+### 以 C 大调为例
+
+|C|D|E|F|G|A|B|C|
+|---|---|---|---|---|---|---|---|
+|I|II|III|IV|V|VI|VII|I|
+|主|上主|中|下属|属|下中|导|主|
+
+# 小调的变体
+
+## 自然小调的变体
+
+### 自然小调
+
+- 大调的 III VI VII 降低半音
+
+### 和声小调
+
+- 自然小调的 VII 音升高半音，使其成为 *导音*
+
+### 旋律小调
+
+- 自然小调 VI 和 VII 升高半音
+- 下行的时候不升高（增加旋律的倾向性）
+
+## Examples
+
+### C 调
+
+||I|II|III|IV|V|VI|VII|I|
+|---|---|---|---|---|---|---|---|---|
+|C 大调|C|D|E|F|G|A|B|C|
+|c 自然小调|C|D|E♭|F|G|A♭|B♭|C|
+|c 和声小调|C|D|E♭|F|G|A♭|B|C|
+|c 旋律小调（上行）|C|D|E♭|F|G|A|B|C|
+
+### a 小调
+
+||I|II|III|IV|V|VI|VII|I|
+|---|---|---|---|---|---|---|---|---|
+|a 自然小调|A|B|C|D|E|F|G|A|
+|a 和声小调|A|B|C|D|E|F|G♯|A|
+|a 旋律小调（上行）|A|B|C|D|E|F♯|G♯|A|

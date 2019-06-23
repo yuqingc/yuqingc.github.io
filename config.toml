@@ -6,6 +6,7 @@ theme = "Mainroad"
 paginate = "10" # Number of posts per page
 summaryLength = 50
 hasCJKLanguage = true # To make summary displays correctly
+publishDir = "public" # Incase the default public dir change
 
 [Author] # Used in authorbox
   name = "Matt"
