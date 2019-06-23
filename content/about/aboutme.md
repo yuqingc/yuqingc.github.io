@@ -11,6 +11,6 @@ menu: main
 
 - Yuqing Chen (Matt)
 - Birth date: April 4
-- Software engineer ⌨️ 
+- Software engineer
 - GitHub: [https://github.com/yuqingc](https://github.com/yuqingc)
 - Email: [mr.chenyuqing@live.com](mailto:mr.chenyuqing@live.com)

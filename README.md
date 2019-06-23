@@ -5,6 +5,13 @@
     ```
     $ git clone --recursive git@github.com:yuqingc/homepage-src.git
     ```
+
+- Update submodules (This is important)
+
+    ```
+    $ git submodule update
+    ```
+
 - Write new post
 
     ```
@@ -21,4 +28,15 @@
 
     ```
     $ hugo -d
+    ```
+
+- Publish
+
+    ```
+    $ cd public
+    $ git add . && git commit -m "message"
+    $ git push
+
+    $ cd ..
+    $ git add . && git commit -m "message"
     ```

@@ -161,4 +161,6 @@ E      G      B      D#
 |CM7|CM7/E|CM7/G|CM7/B|
 |CEGB|**E**GBC|**G**BCE|**B**CEG|
 
+TODO: 圆圈图、大小调、音阶等内容
+
 
