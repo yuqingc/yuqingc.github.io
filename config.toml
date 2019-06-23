@@ -1,0 +1,67 @@
+baseURL = "/"
+languageCode = "en-us"
+title = "Matt's Home"
+pygmentsCodeFences=true
+theme = "Mainroad"
+paginate = "10" # Number of posts per page
+summaryLength = 50
+hasCJKLanguage = true # To make summary displays correctly
+
+[Author] # Used in authorbox
+  name = "Matt"
+  bio = "当我和世界初相见 当我曾经是少年"
+  avatar = "images/avatar.jpg"
+
+[Params]
+  subtitle = "无产阶级工人/Coder 🔨" # Subtitle of your site. Used in site header
+  description = "John Doe's Personal blog about everything" # Site description. Used in meta description
+  copyright = "yuqingc" # copyright holder, otherwise will use site title
+  opengraph = true # Enable OpenGraph if true
+  twitter_cards = true # Enable Twitter Cards if true
+  readmore = false # Show "Read more" button in list if true
+  authorbox = true # Show authorbox at bottom of pages if true
+  toc = true # Enable Table of Contents
+  post_navigation = true # Show post navigation at bottom of pages if true
+  post_meta = ["date", "categories", "translations"] # Order of post meta information
+  mainSections = ["posts", "notes"] # specify section pages to show on home page and the "Recent articles" widget
+  #dateformat = "2006-01-02" # change the format of dates
+  #mathjax = true # Enable MathJax
+  #mathjaxPath = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" # Specify MathJax path
+  #mathjaxConfig = "TeX-AMS-MML_HTMLorMML" # Specify MathJax config
+  #highlightColor = "#e22d30" # Override highlight color
+  customCSS = ["css/custom.css"] # Include custom CSS files
+
+[Params.sidebar]
+  home = "right" # Configure layout for home page
+  list = "right"  # Configure layout for list pages
+  single = "right" # Configure layout for single pages
+  # Enable widgets in given order
+  widgets = ["recent", "categories", "taglist", "social", "languages"]
+
+[Params.widgets]
+  recent_num = 10 # Set the number of articles in the "Recent articles" widget
+  tags_counter = true # Enable counter for each tag in "Tags" widget (disabled by default)
+
+[Params.widgets.social]
+  # Enable parts of social widget
+  # facebook = "username"
+  # twitter = "username"
+  # instagram = "username"
+  # linkedin = "username"
+  # telegram = "username"
+  github = "yuqingc"
+  # gitlab = "username"
+  # bitbucket = "username"
+  email = "mr.chenyuqing@live.com"
+
+[menu]
+
+  [[menu.main]]
+    identifier = "github"
+    name = "GitHub"
+    url = "https://github.com/yuqingc"
+
+  [[menu.main]]
+    identifier = "issues"
+    name = "Feedback"
+    url = "https://github.com/yuqingc/yuqingc.github.io/issues"
