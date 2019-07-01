@@ -27,7 +27,7 @@
 - Build
 
     ```
-    $ hugo -d
+    $ hugo
     ```
 
 - Publish
