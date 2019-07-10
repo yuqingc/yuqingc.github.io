@@ -1,6 +1,6 @@
 ---
 title: "Manjaro 踩坑记"
-date: 2019-07-10T15:42:31+08:00
+date: 2019-07-7T15:42:31+08:00
 draft: true
 toc: false
 tags:
@@ -128,9 +128,22 @@ bind-tools
 Docker 安装比较简单，去 AUR 搜索即可。安装之后需要手动允许在后台运行
 
 ```
-$ sudo systemctl enabel docker
+$ sudo systemctl enable docker
 ```
+
+## Last but not least，[论坛](https://forum.manjaro.org/) 是个好东西
 
 ---
 
-## Last but not least，[论坛](https://forum.manjaro.org/) 是个好东西
+*最后赠送一组 Manjaro 高清壁纸，点击下方图片名即可预览并下载图片* 👇
+
+- 👉 <a style="text-align: center" target="_blank" href="/images/manjaro/matrix-manjaro.jpg">Matrix Manjaro</a>
+
+- 👉 <a style="text-align: center" target="_blank" href="/images/manjaro/manjaro-cat.jpg">Manjaro Cat</a>
+
+- 👉 <a style="text-align: center" target="_blank" href="/images/manjaro/manjaro-dog.jpg">Manjaro Dog</a>
+
+- 👉 <a style="text-align: center" target="_blank" href="/images/manjaro/light-stripe-maia.jpg">Light Stripe Maia</a>
+
+> 图片位于 `/usr/share/backgrounds` 目录, 版权所有 [@Manjaro Linux](https://manjaro.org/). All above pictures' rights are reserved by [@Manjaro Linux](https://manjaro.org/)
+
