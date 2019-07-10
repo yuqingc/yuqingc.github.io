@@ -1,7 +1,7 @@
 ---
 title: "Manjaro 踩坑记"
-date: 2019-07-7T15:42:31+08:00
-draft: true
+date: 2019-07-07T15:42:31+08:00
+draft: false
 toc: false
 tags:
   - linux
