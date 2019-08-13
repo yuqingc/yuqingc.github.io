@@ -4,7 +4,7 @@ date: 2019-06-21T12:13:37+08:00
 draft: false
 # description: "Example article description"
 # thumbnail: "img/placeholder.jpg" # Optional, thumbnail
-lead: "Example lead - highlighted near the title"
+lead: "Why THIS behaves THIS way???"
 comments: false # Enable/disable Disqus comments. Default value: true
 authorbox: true # Enable authorbox for specific post
 toc: true # Optional, enable Table of Contents for specific post
