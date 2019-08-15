@@ -12,13 +12,13 @@ tags:
   - "vue"
 ---
 
-Months ago, I started working for an enterprise which uses *Vue.js* for most of its web projects. The other day, I was trapped in a problem when I was trying to implement a *checkbox*-like component with Vue, for which I need to implement a two-way binding pattern(known as *v-model*). Were this component written with React, under the design of *controlled component*, this would definitely not be a problem. I realized there's still a long way to go before I master this framework and that I should ask for help from the Internet. Finally, I figured that out, of course.
+Months ago, I started working for an enterprise which uses *Vue.js* for most of its web projects. The other day, I was trapped in a problem when I was trying to implement a *checkbox*-like component with Vue, for which I need to implement a two-way binding pattern(known as *v-model*). Were this component written with React, under the design of *controlled component*, this would definitely not be a problem to me. I realized there's still a long way to go before I master this framework and that I should ask for help from the Internet. Finally, I figured that out, of course.
 
-This article talks about how to implement a two-way binding Vue component, as part of my study note. Then, I will compare both ways for data bindings in Vue and React as well. I will also mention my points of the correct design standard for React components. Let's get started.
+This article describes how to implement a two-way binding Vue component, as is part of my study note. Then, I will compare both ways for data bindings in Vue and React as well. I will also mention my points of the decent design standard for React components. Let's get started.
 
 ## tl;dr
 
-- The two-way binding in Vue.js is implemented by a similar way to React.js, which combines a single-way data flow and an event-based design
+- The two-way binding in Vue.js is implemented by a similar way to React.js, which combines a single-way and an event-based data flow to pass data from bottom to up (from child to parent)
 - Your React component *MUST* be able to behave both *controlled* and *uncontrolled*, so as to satisfy the needs of your users
 
 ## Writing your customized two-way binding component
@@ -111,9 +111,9 @@ Here's the implementation of the preceding `my-checkbox` component.
 </script>
 ```
 
-As we saw in the above code snippet, a `model` property is defined to bind a event with the bound prop `checked`. Note that we initialize a local state named `localChecked` because we should not modify a prop of a component directly. The `model` property offers a bridge joining the local `localChecked` with the prop passed from outside world.
+As we saw in the above code snippet, a `model` property is defined for binding a event with the bound prop `checked`. Note that we initialize a local state named `localChecked` because we should not modify a prop of a component directly, otherwise Vue raises a warning in the console. The `model` property offers a bridge joining the local `localChecked` with the prop passed from outside world.
 
-This could be confusing since we did nothing except for the `model` property in the default exported module. Neither did we listen to the `change` event nor we assign another value to the `checked` prop in the parent component. How does the prop of `checked` change with the local `localChecked`?? However, with no doubt, we *did* listen and we *did* re-assign the prop, with the help of `v-model` and `model` field of the child component. Code could be verbose but more clear like the second snippet in the preceding section, which is exactly the main idea of React's data flow management.
+This could be confusing since we did nothing except for the `model` property in the default exported module. Neither did we listen to the `change` event nor assign another value to the `checked` prop in the parent component. How does the prop of `checked` change with the local `localChecked`?? However, with no doubt, we *did* listen and we *did* re-assign the prop, with the help of `v-model` and `model` field of the child component. It could be verbose but more clear that we write the second snippet in the preceding section, which is exactly the core idea of React's data flow management.
 
 ## What can be called a *good* component?
 
@@ -169,11 +169,11 @@ export class MyCheckbox extends React.Component {
 }
 ```
 
-I have to say that *NEITHER* component is a decent React component because their data model is really bad. The first code snippet makes `MyCheckbox` a completely *controlled component*. Users have to write their own logic to control the `checked` prop with a listener function on the `change` event in which they modify `checked`. Even though a *controlled component* model is a pretty good practice and it is even strongly recommended by the React team, sometimes we don't really want to write so many codes if the only line in the listener function is assigning the `checked` variable, and the we just need to fetch the changing data to do something else. The second snippet is apparently an *uncontrolled component*. There is no way to controlled the local state of the component. You should not write such code when your component is for other people to use, especially when *data* really matters.
+*NEITHER* component is a decent React component because their data model is not perfect. The first code snippet makes `MyCheckbox` a completely *controlled component*. Users have to write their own logic to control the `checked` prop with a listener function on the `change` event in which `checked` is modified. Even though a *controlled component* model is a pretty good practice and it is even strongly recommended by the React team, sometimes we don't really want to write so many codes if the only line in the listener function is assigning the `checked` variable, and the we just need to fetch the changing data to do something else. The second snippet is apparently an *uncontrolled component*. There is no way to controlled the local state of the component. You should not write such code when your component is for other people to use, especially when *data* really matters.
 
 ### Idea for a well-designed component with decent data management
 
-I will name such components as *form components* in the following content because such components whose data flow plays an important role are widely used in form elements.
+I will name such components as *form components* in the rest content because such components whose data flow plays an important role are widely used in form elements.
 
 The core idea for a form component is that
 
@@ -252,13 +252,13 @@ class Checkbox extends React.Component {
 
 ```
 
-It's notable that there is an `UNSAFE` prefix in the name of the function `UNSAFE_componentWillReceiveProps`. As the name tells us, this lifecyle function is *not* safe, and we should avoud using this function. React team is deprecating this lifecycle in future versions of React.
+It's notable that there is an `UNSAFE` prefix in the name of the function `UNSAFE_componentWillReceiveProps()`. As the name tells us, this lifecyle function is *not* safe, and we should avoid using this function. React team is deprecating this lifecycle in future versions of React.
 
 Since React 16.3.0, new lifecycles are introduced. We should use those rather than the ones with `UNSAFE` prefix, which will be deleted in the future.
 
 ★★★ Level III
 
-The only thing we need to do is to replace the `UNSAFE_componentWillReceiveProps` method with the following code:
+The only thing we need to do is to replace the `UNSAFE_componentWillReceiveProps()` method with the following code:
 
 ```js
 class Checkbox extends React.Component {
