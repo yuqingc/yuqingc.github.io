@@ -221,7 +221,7 @@ This actually works but this kind of code is strongly unrecommended. The logic f
 
 ★★☆ Level II
 
-React provide us with some lifecycle hook function to handle with props with state. Let's make some improvements and optimization.
+React provides us with some lifecycle hook function to handle with props with state. Let's make some improvements and optimization.
 
 ```jsx
 class Checkbox extends React.Component {
