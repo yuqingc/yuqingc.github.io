@@ -3,11 +3,10 @@ title: "Music Theory Basic"
 date: 2019-05-20T11:57:36+08:00
 draft: false
 toc: false
-thumbnail: "images/guitar.jpg"
 tags:
   - music
 categories:
-  - notes
+  - music
 ---
 
 # 音程

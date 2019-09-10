@@ -14,7 +14,7 @@ publishDir = "public" # Incase the default public dir change
   avatar = "images/avatar.jpg"
 
 [Params]
-  subtitle = "无产阶级工人/Coder 🔨" # Subtitle of your site. Used in site header
+  subtitle = "无产阶级工人/Coder" # Subtitle of your site. Used in site header
   description = "John Doe's Personal blog about everything" # Site description. Used in meta description
   copyright = "yuqingc" # copyright holder, otherwise will use site title
   opengraph = true # Enable OpenGraph if true
@@ -24,7 +24,7 @@ publishDir = "public" # Incase the default public dir change
   toc = true # Enable Table of Contents
   post_navigation = true # Show post navigation at bottom of pages if true
   post_meta = ["date", "categories", "translations"] # Order of post meta information
-  mainSections = ["posts", "notes"] # specify section pages to show on home page and the "Recent articles" widget
+  mainSections = ["posts"] # specify section pages to show on home page and the "Recent articles" widget
   #dateformat = "2006-01-02" # change the format of dates
   #mathjax = true # Enable MathJax
   #mathjaxPath = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" # Specify MathJax path
@@ -66,3 +66,8 @@ publishDir = "public" # Incase the default public dir change
     identifier = "issues"
     name = "Feedback"
     url = "https://github.com/yuqingc/yuqingc.github.io/issues"
+
+  [[menu.main]]
+    identifier = "music"
+    name = "Music"
+    url = "/categories/music/"

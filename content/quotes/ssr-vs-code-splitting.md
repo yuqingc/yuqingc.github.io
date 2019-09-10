@@ -5,7 +5,7 @@ draft: false
 toc: false
 lead: "为什么有 WebPack 的 CodeSplitting 还需要 SSR？"
 categories:
-  - "stackoverflow"
+  - "quotes"
 tags:
   - "javascript"
   - "react"
