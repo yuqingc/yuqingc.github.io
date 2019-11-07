@@ -26,15 +26,16 @@ export function downloadImage (imgsrc, name) {
         context.drawImage(image, 0, 0, image.width, image.height);
         const _dataURL = canvas.toDataURL('image/png') // get base64 of image
 
-        const blob_ = dataURLtoBlob(_dataURL) // 用到 Blob 是因为图片文件过大时，在一部分浏览器上会下载失败，而 Blob 就不会
+        // User Blob in case the file is large, causing downloading failure in some browsers
+        const blob_ = dataURLtoBlob(_dataURL)
 
         const url = {
-            name: name || '图片', // 图片名称不需要加 .png 后缀名
+            name: name || 'Image', // No need of .png suffix
             src: blob_
         };
 
         if (window.navigator.msSaveOrOpenBlob) { // if browser is IE
-            navigator.msSaveBlob(url.src, url.name) // filename文件名包括扩展名，下载路径为浏览器默认路径
+            navigator.msSaveBlob(url.src, url.name) // filename includes extensions, saving to browser's default download target folder
         } else {
             const link = document.createElement('a');
             link.setAttribute('href', window.URL.createObjectURL(url.src));
