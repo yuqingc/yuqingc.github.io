@@ -17,6 +17,8 @@ tags:
 # menu: main # Optional, add page to a menu. Options: main, side, footer
 ---
 
+<a target="_blank" href="https://zhuanlan.zhihu.com/p/37911534">中文版请戳我</a>
+
 ## Motivation
 
 If you are familiar with [React.js](https://reactjs.org), you should know that if you add an event listener to an element like the following, you get a syntax error when you try triggering the `click` event.

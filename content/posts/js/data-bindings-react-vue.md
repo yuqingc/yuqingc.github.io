@@ -313,3 +313,7 @@ export function CheckboxHook (props) {
 I can't say function Component with Hook is better than Class Component, but it works anyway.
 
 By the way, we use `useRef` to skip the first run of the `useEffect` callback function. (See [the Stackoverflow discussion](https://stackoverflow.com/questions/53351517/react-hooks-skip-first-run-in-useeffect))
+
+
+---
+*Authored by <a target="_blank" href="https://github.com/yuqingc">@yuqingc</a> 转载请注明出处*

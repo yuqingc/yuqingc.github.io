@@ -147,3 +147,6 @@ $ sudo systemctl enable docker
 
 > 图片位于 `/usr/share/backgrounds` 目录, 版权所有 [@Manjaro Linux](https://manjaro.org/). All above pictures' rights are reserved by [@Manjaro Linux](https://manjaro.org/)
 
+
+---
+*Authored by <a target="_blank" href="https://github.com/yuqingc">@yuqingc</a> 转载请注明出处*

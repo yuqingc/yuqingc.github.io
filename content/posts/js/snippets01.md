@@ -1,17 +1,61 @@
 ---
-title: "A solution for downloading CORS images"
-lead: "When \"download\" attribute of \"a\" tag does not work..."
+title: "Useful JavaScript Snippets"
+lead: "Happy Copying & Pasting!"
 date: 2019-07-24T15:42:31+08:00
 draft: false
-toc: false
+toc: true
 tags:
   - javascript
 categories:
   - notes
 ---
 
-<!--more--> 
-## Code
+<!--more-->
+
+## Copy to clipboard
+
+```js
+function fallbackCopyTextToClipboard (text) {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.style.position = 'fixed'; // avoid scrolling to bottom
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    try {
+        document.execCommand('copy');
+    } finally {
+        document.body.removeChild(textArea);
+    }
+}
+
+function copyToClipboard (text) {
+  if (!navigator.clipboard) {
+    return fallbackCopyTextToClipboard(text);
+  }
+  return navigator.clipboard.writeText(text);
+}
+```
+
+## Deal with pasted files/images
+
+```js
+myInputElement.addEventListener('paste', handlePaste);
+handlePaste (e) {
+    const clipboardItems = e.clipboardData.items;
+    let file = null;
+    for (let i = 0; i < clipboardItems.length; i++) {
+    if (clipboardItems[i].kind === 'file') {
+        file = clipboardItems[i].getAsFile();
+        console.log('Pasted file is', file);
+        break;
+    }
+    }
+}
+```
+
+## Download CORS images
 
 ```js
 export function downloadImage (imgsrc, name) {

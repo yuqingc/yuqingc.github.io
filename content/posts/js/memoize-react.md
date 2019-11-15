@@ -220,3 +220,7 @@ React 16.8 带来了全新的 Hook。Hook 为我们提供了原生的记忆化 A
 - [You Probably Don't Need Derived State](https://reactjs.org/blog/2018/06/07/you-probably-dont-need-derived-state.html#what-about-memoization)
 
 - [memoize-one](https://www.npmjs.com/package/memoize-one)
+
+
+---
+*Authored by <a target="_blank" href="https://github.com/yuqingc">@yuqingc</a> 转载请注明出处*

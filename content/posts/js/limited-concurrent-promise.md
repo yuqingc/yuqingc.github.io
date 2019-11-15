@@ -128,3 +128,7 @@ anotherRun(tasks) {
 ### Why I don't like this 😒
 
 Publishing the change of running queue actively saves more CPU resources than the infinite loop watching. However there are potential risks that some task is not able to inform the outside world the change of running queue, or that a new task cannot be pushed to the running queue in time due to some system error. An infinite loop keeps track of the change of all data structures in the program. (The code above is a demo which indicates how the program works. We still need to work on boundaries conditions where errors might occur)
+
+
+---
+*Authored by <a target="_blank" href="https://github.com/yuqingc">@yuqingc</a> 转载请注明出处*

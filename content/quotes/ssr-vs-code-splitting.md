@@ -78,5 +78,3 @@ Everything has its own trade-off here imo. As I mention in the **Only using code
 
 > **Note**
 > Currently `lazy` (in React v16.6.1) doesn't support SSR completely. You might want to check out [`react-loadable`](https://github.com/jamiebuilds/react-loadable#------------server-side-rendering) to handle the cases where you wish to preload components server side.
-
-
