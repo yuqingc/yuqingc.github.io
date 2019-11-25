@@ -108,7 +108,16 @@ $ sudo pacman -Syu
 
 ### 输入法
 
-说结论。直接使用原生 fcitx 或者 ibus 即可。体验虽然不如搜狗，但是截至目前搜狗是无法安装的，原因是搜狗依赖的某个 qt 包已经被官方源删除了。
+- 说结论。直接使用原生 fcitx 或者 ibus 即可。体验虽然不如搜狗，但是截至目前搜狗是无法安装的，原因是搜狗依赖的某个 qt 包已经被官方源删除了。
+- 建议使用 ibus-libpinyin
+- 安装完成输入法之后要在 `.bashrc` 内设置以下环境变量
+
+  ```bash
+  export GTK_IM_MODULE=ibus
+  export XMODIFIERS=@im=ibus
+  export QT_IM_MODULE=ibus
+  ```
+- 安装完成之后需要在系统设置里面把安装好的输入法添加到 input source 里面
 
 ### nslookup
 
