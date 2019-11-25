@@ -119,6 +119,12 @@ $ sudo pacman -Syu
   ```
 - 安装完成之后需要在系统设置里面把安装好的输入法添加到 input source 里面
 
+### 修改键位
+
+- 把 CapsLocks 改成 Control；把 Shift+CapsLocks 改成 toggle 大小写要注意:
+  - 不要把 `xmodmap -pke` 的输出整个放在 `.Xmodmap`，否则执行 xmodmap 的时候会非常卡。
+  - 具体原因参[这里](https://unix.stackexchange.com/questions/94336/xmodmap-hanging-the-system-for-20-secs-and-not-sticking/390198#390198)
+
 ### nslookup
 
 ```
@@ -139,6 +145,10 @@ Docker 安装比较简单，去 AUR 搜索即可。安装之后需要手动允�
 ```
 $ sudo systemctl enable docker
 ```
+
+## 万能的 Tweaks
+
+一定要玩一玩 Gnome 自带的 tweaks 工具，他可以帮助你优化和各种自定义你的桌面
 
 ## Last but not least，[论坛](https://forum.manjaro.org/) 是个好东西
 
