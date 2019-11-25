@@ -119,6 +119,12 @@ $ sudo pacman -Syu
   ```
 - 安装完成之后需要在系统设置里面把安装好的输入法添加到 input source 里面
 
+#### ibus 无法修改字体大小的解决方案
+
+1. 下载浏览器插件 [Gnome Shell Extension](https://extensions.gnome.org/extension/1121/ibus-font-setting/)
+2. 安装 `ibus font setting` 即可
+3. ibus 自带字体设置就可以生效了
+
 ### 修改键位
 
 - 把 CapsLocks 改成 Control；把 Shift+CapsLocks 改成 toggle 大小写要注意:
