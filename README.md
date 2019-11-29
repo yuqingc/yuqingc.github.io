@@ -23,6 +23,12 @@
     ```
     $ hugo server -D
     ```
+
+- Deploy
+
+    ```
+    $ bin/deploy.sh
+    ```
     
 - Build
 

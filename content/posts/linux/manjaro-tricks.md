@@ -21,7 +21,7 @@ categories:
 
 > When you are ready, follow ‘First steps’. We also encourage you to read our [MANUAL](https://manjaro.org/support/userguide/).
 
-却不以为然，视而不见，熟练的打开 [Rufus](https://rufus.ie/)，一顿操作，结果并不能启动。然而并没有灰心，又熟练的打开了 [UltraISO](https://cn.ultraiso.net/)，结果仍然不行。直接说结果吧
+不要直接用 [Rufus](https://rufus.ie/) 或者 [UltraISO](https://cn.ultraiso.net/) 凭自己想象做镜像，会失败的。一定要：
 
 > Use **dd** as copy option to make a working bootable USB-Stick
 
