@@ -7,7 +7,7 @@ tags:
   - linux
   - manjaro
 categories:
-  - notes
+  - blogs
 ---
 
 ## Get your hands dirty
