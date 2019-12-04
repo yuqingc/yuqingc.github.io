@@ -1,6 +1,6 @@
 ---
-title: "Data Bindings in React and Vue"
-lead: "Designing components the graceful way"
+title: "Thoughts of Data Bindings Strategies in React and Vue"
+lead: "Designing components with graceful data flow"
 date: 2019-08-13T10:50:17+08:00
 draft: false
 toc: true
