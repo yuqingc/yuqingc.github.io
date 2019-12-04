@@ -13,7 +13,6 @@ tags:
 When you call `Promise.prototype.all()`, there is no approach to controlling the number of concurrent promise tasks. This can cause a large usage of OS resources if the number of the tasks array is really large.
 
 There are some excellent packages aiming to solve this problem. For example, [p-limit](https://www.npmjs.com/package/p-limit). *p-limit* uses an `activeCount` variable to control the current running tasks.
-
 The implementation I am introducing for solving this issue is a little bit different.
 
 ## An infinite loop watching the size of the running queue
