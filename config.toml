@@ -8,6 +8,11 @@ summaryLength = 50
 hasCJKLanguage = true # To make summary displays correctly
 publishDir = "public" # Incase the default public dir change
 
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true # enable html in markdown files
+
 [Author] # Used in authorbox
   name = "Matt"
   bio = "当我和世界初相见 当我曾经是少年"

@@ -79,7 +79,7 @@ export default {
 
 Here's the implementation of the preceding `my-checkbox` component.
 
-```html
+```html {linenos=inline,hl_lines=["18-21"]}
 <!-- my-checkbox.vue -->
 
 <template>
