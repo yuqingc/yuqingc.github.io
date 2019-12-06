@@ -60,6 +60,11 @@ publishDir = "public" # Incase the default public dir change
   # bitbucket = "username"
   email = "mr.chenyuqing@live.com"
 
+[[Params.widgets.social.custom]]
+  title = "(゜-゜)つロ 干杯~"
+  url = "https://space.bilibili.com/76849204"
+  icon = "bilibili.svg"
+
 [menu]
 
   [[menu.main]]
