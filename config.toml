@@ -19,7 +19,7 @@ publishDir = "public" # Incase the default public dir change
   avatar = "images/avatar.jpg"
 
 [Params]
-  subtitle = "无产阶级工人/Coder" # Subtitle of your site. Used in site header
+  subtitle = "无产阶级工人/Coder 🔨" # Subtitle of your site. Used in site header
   description = "John Doe's Personal blog about everything" # Site description. Used in meta description
   copyright = "yuqingc" # copyright holder, otherwise will use site title
   opengraph = true # Enable OpenGraph if true

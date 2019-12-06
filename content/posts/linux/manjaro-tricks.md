@@ -152,9 +152,18 @@ Docker 安装比较简单，去 AUR 搜索即可。安装之后需要手动允�
 $ sudo systemctl enable docker
 ```
 
-## 万能的 Tweaks
+### Emoji 😁 支持
+
+Firefox 内置了 Emoji 的支持。但是其他浏览器和应用要想显示 Emoji 需要安装 `noto-fonts-emoji`
+
+```
+$ sudo pacman -Syu noto-fonts-emoji
+```
+
+### 万能的 Tweaks
 
 一定要玩一玩 Gnome 自带的 tweaks 工具，他可以帮助你优化和各种自定义你的桌面
+
 
 ## Last but not least，[论坛](https://forum.manjaro.org/) 是个好东西
 
