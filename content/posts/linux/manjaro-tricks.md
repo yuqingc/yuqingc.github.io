@@ -109,7 +109,7 @@ $ sudo pacman -Syu
 ### 输入法
 
 - 说结论。直接使用原生 fcitx 或者 ibus 即可。体验虽然不如搜狗，但是截至目前搜狗是无法安装的，原因是搜狗依赖的某个 qt 包已经被官方源删除了。
-- 建议使用 ibus-libpinyin
+- 建议使用 ibus-rime
 - 安装完成输入法之后要在 `.bashrc` 内设置以下环境变量
 
   ```bash
@@ -159,6 +159,10 @@ Firefox 内置了 Emoji 的支持。但是其他浏览器和应用要想显示 E
 ```
 $ sudo pacman -Syu noto-fonts-emoji
 ```
+
+### 查看系统信息
+
+- neofetch
 
 ### 万能的 Tweaks
 
