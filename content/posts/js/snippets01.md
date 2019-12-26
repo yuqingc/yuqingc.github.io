@@ -100,3 +100,37 @@ export function downloadImage (imgsrc, name) {
     }
 }
 ```
+
+### Download CORS file
+
+```js
+// save blob with name
+function saveBlob (blob, filename) {
+  const link = document.createElement('a')
+  link.href = window.URL.createObjectURL(blob)
+  link.download = filename
+  link.click()
+}
+
+// get blob by file url
+function getBlob (url) {
+  return new Promise(resolve => {
+    const xhr = new XMLHttpRequest()
+ 
+    xhr.open('GET', url, true)
+    xhr.responseType = 'blob'
+    xhr.onload = () => {
+      if (xhr.status === 200) {
+        resolve(xhr.response)
+      }
+    }
+    xhr.send()
+  })
+}
+
+export default function saveAs (url, filename) {
+  getBlob(url).then(blob => {
+    saveBlob(blob, filename)
+  })
+}
+```
