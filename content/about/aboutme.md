@@ -2,6 +2,7 @@
 title: "About Me"
 date: 2019-01-17T10:37:40.065Z
 draft: false
+toc: false
 tags:
   - profile
 categories:
@@ -10,6 +11,7 @@ menu: main
 ---
 
 - Yuqing Chen (Matt)
+- Location: Hangzhou, China
 - Birth date: April 4
 - Software engineer
 - GitHub: [https://github.com/yuqingc](https://github.com/yuqingc)
