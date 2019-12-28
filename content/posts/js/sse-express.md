@@ -13,7 +13,7 @@ toc: false
 
 互联网可以轻松搜索到关于 SSE 的标准，因此不赘述。本文主要介绍 Node.js 的实现
 
-- 见 [MDN 文档](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events)
+> 见 [MDN 文档](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events/Using_server-sent_events)
 
 ## 客户端示例
 
@@ -142,3 +142,8 @@ class SseServer {
   }
 }
 ```
+
+本文仅展示核心原理。如需提高代码健壮性，需要有更多的错误处理以及缓存长度检查机制以防止内存泄漏。
+
+---
+*Authored by <a target="_blank" href="https://github.com/yuqingc">@yuqingc</a> 转载请注明出处*
