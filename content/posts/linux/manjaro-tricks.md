@@ -160,9 +160,11 @@ Firefox 内置了 Emoji 的支持。但是其他浏览器和应用要想显示 E
 $ sudo pacman -Syu noto-fonts-emoji
 ```
 
-### 查看系统信息
+### 其他
 
-- neofetch
+- neofetch 查看系统信息
+- [`bat`](https://github.com/sharkdp/bat) 用来取代 `less` 或者 `cat`
+- [`lsd`](https://github.com/Peltoche/lsd) 用来取代 `ls`
 
 ### 万能的 Tweaks
 
