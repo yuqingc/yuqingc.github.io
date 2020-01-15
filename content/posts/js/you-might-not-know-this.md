@@ -17,7 +17,7 @@ tags:
 # menu: main # Optional, add page to a menu. Options: main, side, footer
 ---
 
-<a target="_blank" href="https://zhuanlan.zhihu.com/p/37911534">中文版请戳我</a>
+<a target="_blank" href="https://zhuanlan.zhihu.com/p/37911534"><h3>中文版请戳我</h3></a>
 
 ## Motivation
 
