@@ -12,7 +12,7 @@ menu: main
 
 - Yuqing Chen (Matt)
 - Location: Hangzhou, China
-- Birth date: April 4
+- Birth date: April 4, 1995
 - Software engineer
 - GitHub: [https://github.com/yuqingc](https://github.com/yuqingc)
 - Email: [mr.chenyuqing@live.com](mailto:mr.chenyuqing@live.com)
