@@ -10,14 +10,14 @@ categories:
   - blogs
 ---
 
-## Get your hands dirty
+## 开工
 
-当用腻了 Ubuntu、CentOS，想换 Arch 系尝鲜时，却被坑了（真香警告）。果然 *并不是* 所有的 Linux 都是一样的。本文以 [Gnome 版本](https://manjaro.org/download/gnome/)为例。
+[Manjaro](https://manjaro.org/) 是一款基于 [Arch Linux](https://www.archlinux.org/) 的系统。它由很多个内置桌面的发行版，本文以 [Gnome 版本](https://manjaro.org/download/gnome/)为例。
 
 
 ## 系统安装
 
-一切从安装说起。人家官网都这么说了：
+重要事项，第一次安装一定要阅读手册：
 
 > When you are ready, follow ‘First steps’. We also encourage you to read our [MANUAL](https://manjaro.org/support/userguide/).
 
@@ -53,6 +53,8 @@ $ makepkg -sic
 ### Nvidia 显卡驱动安装
 
 参考 https://wiki.manjaro.org/index.php?title=Configure_NVIDIA_(non-free)_settings_and_load_them_on_Startup
+
+如果没有游戏或者 GPU 计算的需求，就不必安装了
 
 > 安装完极有可能出现 Gnome 桌面无法启动，卡在启动页面。请勿惊慌，`ctrl + alt + f?` 进入命令行，按照上述文档，手动重装或者卸载 Nvidia 驱动
 
@@ -122,7 +124,7 @@ $ sudo pacman -Syu
 #### ibus 无法修改字体大小的解决方案
 
 1. 下载浏览器插件 [Gnome Shell Extension](https://extensions.gnome.org/extension/1121/ibus-font-setting/)
-2. 安装 `ibus font setting` 即可
+2. 安装 [IBus Font Setting](https://extensions.gnome.org/extension/2729/ibus-font-setting/) 即可
 3. ibus 自带字体设置就可以生效了
 
 ### 修改键位
