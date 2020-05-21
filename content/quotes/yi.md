@@ -18,6 +18,9 @@ categories:
 <script type="text/javascript">
 /****** Utils ******/
 
+const RED_COLOR = '#e22d30';
+const DARK_COLOR = '#2a2a2a';
+
 // get random integer between min and max, including both
 const getRandomIntBetween = (min, max) => {
   if (!(min < max)) {
@@ -60,7 +63,7 @@ const createYao = (isYang, isBig, description) => {
     yangPattern.style.height = '10px'
     yangPattern.style.width = '100px';
     yangPattern.style.margin = '6px';
-    yangPattern.style.backgroundColor = isBig ? '#f00' : '#000';
+    yangPattern.style.backgroundColor = isBig ? RED_COLOR : DARK_COLOR;
     yaoPatterns.push(yangPattern);
   } else {
     for (let i = 0; i < 2; i++) {
@@ -68,14 +71,14 @@ const createYao = (isYang, isBig, description) => {
       yinPattern.style.height = '10px'
       yinPattern.style.width = '44px';
       yinPattern.style.margin = '6px';
-      yinPattern.style.backgroundColor = isBig ? '#f00' : '#000';
+      yinPattern.style.backgroundColor = isBig ? RED_COLOR : DARK_COLOR;
       yaoPatterns.push(yinPattern);
     }
   }
   if (description) {
     const content = document.createTextNode(description);
     yaoPatterns.push(content);
-    ele.style.color = isBig ? '#f00' : '#000';
+    ele.style.color = isBig ? RED_COLOR : DARK_COLOR;
   }
 
   yaoPatterns.forEach(el => {
