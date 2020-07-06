@@ -25,7 +25,7 @@ This article describes how to implement a two-way binding Vue component, as is p
 
 ### Interface
 
-The known directive `v-model` is often used when there is a two-way binding scenario. Here's how the parent component looks like
+The known directive `v-model` is often used when there is a two-way binding scenario. Here's how the parent component looks:
 
 ```html
 <!-- parent.vue -->
