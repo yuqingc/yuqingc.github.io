@@ -14,7 +14,7 @@ tags:
 
 ## Flutter 环境准备
 
-由于众所周知的原因，Flutter 的官网 (https://flutter.dev/) 搭概率是访问不了的，就算能访问，也很慢。官方很贴心地为 QIANG 内用户准备了中文官网：
+由于众所周知的原因，Flutter 的官网 (https://flutter.dev/) 大概率是访问不了的，就算能访问，也很慢。官方很贴心地为 QIANG 内用户准备了中文官网：
 
 - https://flutter.cn
 
