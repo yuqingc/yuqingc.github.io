@@ -1,5 +1,5 @@
 ---
-title: "Cheatsheet 系列 之 HTTP"
+title: "Cheatsheet 系列 之 HTTP（一）"
 lead: ""
 date: 2020-07-22T22:50:17+08:00
 draft: false
@@ -86,6 +86,64 @@ tags:
 - `Fetch API`
 - Server-sent Event (`EventSource`)
 - 注意 WebSocket API 不是基于 HTTP 协议，是基于 WebSocket 协议
+
+---
+
+## HTTP 报文
+
+### 概览
+
+- 分为 Request message 和 Response message
+- HTTP/1.1 以前的报文是明文(ASCII)发送的
+- HTTP/2 之后的报文是通过 HTTP Frame 发送的
+
+#### Request 和 Response 共同都有的部分
+
+- Start line
+- Headers
+- 空行
+- 可选的 body
+
+### HTTP Request
+
+- Start line
+
+  - method + target + version
+  - 如 `POST / HTTP/1.1`
+
+- Headers
+
+  - General Headers
+  - Request Headers
+  - Entity Headers 给 Body 使用，含有 Body 的某些属性。比如 `Content-Type`
+
+- Body
+
+  - 单资源 Body。使用 `Content-Type` 和 `Content-Length` 定义
+  - 多资源 Body。比如使用 HTML Form
+
+### HTTP Response
+
+- Status line `HTTP/1.0 404 Not Found`
+- Headers
+  - General Headers
+  - Request Headers
+  - Entity Headers
+- Body
+
+### HTTP/2 Frame
+
+#### HTTP/1.x 报文的缺点
+
+- Header 无法像 Body 那样可以压缩
+- 不同报文的 header 很多字段都重复了，无法复用
+- 无法复用连接
+
+#### HTTP/2 Frame
+
+- 多路复用，高效利用 TCP 连接
+- Frame 对于开发者来说是透明的，无需更改 API。客户端和服务端会自动解压
+
 
 ---
 
@@ -226,3 +284,246 @@ tags:
 #### 隐私政策
 
 - 欧盟相关法律规定了必须告知用户 Cookie 的使用并且用户可以拒绝使用
+
+## HTTP 连接管理
+
+### 种类
+
+- 短连接 short-lived connection 每次请求都要开一个新的 TCP 连接，性能不好
+- 长连接 persistent connection 多个请求之后才关闭连接
+- 流水线 pipelining 不需要等响应，可以先发送多个请求
+
+### 链接管理
+
+- 使用了 Hop-by-hop 的 Header，比如 `Connection`。这种 Header 不允许通过 proxy 透传到最终的服务器（或反过来）。每一跳的连接都是不同的（我自己的理解）。不允许代理和缓存。
+- 另一种 Header 是 End-to-end 的。要求从客户端需要通过一层层代理，传到最终的服务器。proxy 需要转发，缓存也必须存下来。
+
+
+## HTTP 协议升级
+
+- 使用 `Upgrade` Header，允许把当前的连接转为另一个协议
+- HTTP/1.1 的特性，一般用来启动 WebSocket
+- HTTP/2 禁用了此特性
+
+### 步骤
+
+- 客户端发起一个请求 `Connection: upgrade` 和 `Upgrade: 新协议名`
+- 如果服务端可以，则返回 `101 Switching Protocols` 然后开始新的协议的连接
+- 如果服务端不支持，则返回普通的 `200 Ok`
+
+### WebSocket
+
+#### 开启 WebSocket
+
+```js
+webSocket = new WebSocket("ws://destination.server.ext", "optionalProtocol");
+```
+
+- 调用这个 API，浏览器会自动处理由 HTTP/1 到 WebSocket 的升级。如果需要自己处理，那就要自己处理 TCP 握手。
+- 需要包含下列 Header
+
+  ```
+  Connection: Upgrade
+  Upgrade: websocket
+  ```
+
+#### WebSocket 相关的其他 Header
+
+- 参考 https://developer.mozilla.org/en-US/docs/Web/HTTP/Protocol_upgrade_mechanism#Upgrading_to_a_WebSocket_connection
+
+## CORS
+
+如果 CORS 失败了，JS 是读取不到错误的，只能通过控制台看到错误日志
+
+### 哪些请求适用 CORS
+
+- Ajax 或 `Fetch API` 发送的请求
+
+- Web Fonts （在 CSS 中使用 `@font-face` 定义的字体）
+
+- WebGL Texture
+
+- 使用 `drawImage()` 的 Canvas
+
+- 使用图片的 CSS Shapes
+
+
+### 同时满足下列条件浏览器不会发送 Preflight（OPTION 请求）
+
+- Method 为下列之一
+
+  - GET
+
+  - HEAD
+
+  - POST
+
+- 手动设置的 Header 只能是：
+
+  ```
+  Accept
+  Accept-Language
+  Content-Language
+  Content-Type (but note the additional requirements below)
+  DPR
+  Downlink
+  Save-Data
+  Viewport-Width
+  Width
+  ```
+
+- `Content-Type` 只允许：
+
+  - `application/x-www-form-urlencoded`
+
+  - `multipart/form-data`
+
+  - `text/plain`
+
+- 不能监听任何 `XMLHttpRequestUpload` 对象，即 `XMLHttpRequest.upload`
+
+- 请求不能使用 `ReadableStream`
+
+### 发送流程
+
+- Request
+
+  - 发送 OPTIONS 请求
+  - 发送 `Access-Control-Request-Method` 和 `Access-Control-Request-Headers`
+
+- 响应
+
+  - 响应 Header 包含
+
+  ```
+  Access-Control-Allow-Origin: http://foo.example
+  Access-Control-Allow-Methods: POST, GET, OPTIONS
+  Access-Control-Allow-Headers: X-PINGOTHER, Content-Type
+  Access-Control-Max-Age: 86400
+  ```
+
+### `withCredentials`
+
+- 浏览器发送任何跨与请求时，默认不会带上 Cookie
+- 把 Ajax 或 Fetch 的 `withCredentials` 设置为 `true` 会发送 Cookie
+- 如果服务端的返回 Header 没有 `Access-Control-Allow-Credentials: true` 浏览器会拒绝返回的内容
+
+#### 关于 `Access-Control-Allow-Origin` 的通配符
+
+- 服务端在响应带有 Cookie 的跨域请求时，必须指定 `Access-Control-Allow-Origin`，而不能用 `*` 通配符
+
+### 相关 Header
+
+- Response Headers
+
+  ```
+  Access-Control-Allow-Origin
+  Access-Control-Allow-Methods
+  Access-Control-Allow-Headers
+  Access-Control-Expose-Headers 允许客户端可以读取到的 Header
+  Access-Control-Max-Age
+  Access-Control-Allow-Credentials
+  ```
+
+- Request Headers
+
+  ```
+  Origin
+  Access-Control-Request-Method
+  Access-Control-Request-Headers
+  ```
+
+## HTTP 压缩
+
+HTTP 压缩有三个层面
+
+- 文件格式压缩
+- 端到端压缩（end to end）
+- 节点之间的压缩（hop by hop）
+
+### 文件格式压缩
+
+- 无损压缩 `gif` 和 `png`
+- 有损压缩，Web 视频以及 `jpeg`
+
+有些格式既可以有损，也可以用作无损压缩，比如 `webp`
+
+*已经压缩过的文件不要使用以下的压缩技术*
+
+#### 端到端压缩
+
+- 服务端压缩，中间的 proxy 不动数据，直到客户端解压
+- 常用的压缩算法
+  - gzip，最常用
+  - br，新的
+
+#### 过程
+
+- 客户端请求带上 `Accept-Encoding`
+- 服务端带上 `Content-Encoding` 和 `Vary: Accept-Encoding` 的 Header 以及经过压缩的内容
+- 建议所有的内容都要这样压缩，除了已经压缩的图片或者视频
+
+### Hop-by-hop 压缩
+
+不同节点之间的压缩协议
+
+- 使用 `Transfer-Encoding` header，一般在代理服务器使用，对于客户端和服务端两个终端来说是透明的
+
+## HTTP 重定向
+
+Redirect 也叫 Forwarding。实现了以下功能：
+
+- 临时 比如服务器暂时不可用的时候
+- 永久
+
+### 原理
+
+- 服务端返回 `3xx` 状态码
+- Header 中的 `Location` 带有重定向的 URL
+- 浏览器收到 URL 之后马上请求新的 URL，用户一般很难察觉
+
+重定向氛围下面的种类
+
+- 永久重定向
+- 临时重定向
+- 特殊重定向
+
+#### 永久重定向
+
+搜索引擎、RSS 等爬虫会因此更新新的 URL
+
+- `301 Moved Permanently` 重定向，GET 不变，允许 Method 改变
+- `308 Permanent Redirect` 不允许 Method 由 POST 改为 GET
+
+#### 临时重定向
+
+- `302 Found` GET 不变，其他方法不能变为 GET
+- `303 See Other` GET 不变，其他方法变为 GET（去掉 body）
+- `307 Temporary Redirect` Method 不允许改变
+
+
+#### 特殊重定向
+
+- `300 Multiple Choice`
+- `304 Not Modified` 用于重新验证缓存的请求，缓存的资源还没过期
+
+### 其他重定向
+
+#### HTML 重定向
+
+```html
+<head> 
+  <!-- 0 代表重定向之前等待的时间 -->
+  <meta http-equiv="Refresh" content="0; URL=https://example.com/">
+</head>
+```
+
+#### JS 重定向
+
+```js
+window.location = ''
+```
+
+### 使用场景
+
+参考 https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections
