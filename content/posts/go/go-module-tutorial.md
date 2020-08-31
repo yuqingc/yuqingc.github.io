@@ -45,8 +45,8 @@ Go 1.11 之前，包管理不太方便，所有的项目需要在 `GOPATH` 目�
 - 如果代码中有外部依赖的包，在执行会触发编译 go 命令的时候（如 `go run`, `go build`, `go install`, `go test` 等）会自动在 `go.mod` 中自动添加依赖
 
   ```txt {hl_lines=["5"]}
-  module hahaha/aaa/bbb/a
-
+  module github.com/yuqingc/hello
+  
   go 1.15
 
   require rsc.io/quote/v3 v3.1.0
