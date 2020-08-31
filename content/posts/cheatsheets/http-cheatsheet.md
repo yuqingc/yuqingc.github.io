@@ -333,7 +333,15 @@ webSocket = new WebSocket("ws://destination.server.ext", "optionalProtocol");
 
 ## CORS
 
-如果 CORS 失败了，JS 是读取不到错误的，只能通过控制台看到错误日志
+如果 CORS 失败了，JS 无法捕获错，只能通过控制台看到错误日志
+
+### 什么算 Cross-Origin
+
+只要下列有一项不同，即为 Cross-Origin（所谓的“跨域”，其实我认为翻译成“跨源”更为准确）
+
+- 协议
+- 域名
+- 端口号
 
 ### 哪些请求适用 CORS
 
