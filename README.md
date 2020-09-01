@@ -1,12 +1,16 @@
 # yuqingc.github.io
 
+The `master` branch contains all source codes for the page. Generated contents are at the [`gh-page`](https://github.com/yuqingc/yuqingc.github.io/tree/gh-pages) branch.
+
+## Get Started
+
 - Clone & update submodules (themes)
 
     ```
-    $ git clone --recursive git@github.com:yuqingc/homepage-src.git
+    $ git clone --recursive git@github.com:yuqingc/yuqingc.github.io.git
     ```
 
-- Update submodules (This is important)
+- Update submodules for themes
 
     ```
     $ git submodule update
@@ -23,12 +27,6 @@
     ```
     $ hugo server -D
     ```
-
-- Deploy
-
-    ```
-    $ bin/deploy.sh
-    ```
     
 - Build
 
@@ -39,10 +37,5 @@
 - Publish
 
     ```
-    $ cd public
-    $ git add . && git commit -m "message"
-    $ git push
-
-    $ cd ..
-    $ git add . && git commit -m "message"
+    $ ./bin/publish_to_ghpages.sh
     ```
