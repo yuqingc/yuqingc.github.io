@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html class="no-js" lang="en-us">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title>Cheatsheet 系列 之 HTTP（一） - Matt&#39;s Home</title>
+	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
+	<meta name="description" content="">
+	<meta property="og:title" content="Cheatsheet 系列 之 HTTP（一）" />
+<meta property="og:description" content="打算开始更新 Sheetsheet 系列。记录一些容易遗漏的知识点。这是第一期：HTTP。" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="/posts/cheatsheets/http-cheatsheet/" />
+<meta property="article:published_time" content="2020-07-22T22:50:17+08:00" />
+<meta property="article:modified_time" content="2020-07-22T22:50:17+08:00" />
+
+	<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Cheatsheet 系列 之 HTTP（一）"/>
+<meta name="twitter:description" content="打算开始更新 Sheetsheet 系列。记录一些容易遗漏的知识点。这是第一期：HTTP。"/>
+
+	<link rel="dns-prefetch" href="//fonts.googleapis.com">
+	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
+	<link rel="stylesheet" href="/css/style.css">
+	<link rel="stylesheet" href="/css/custom.css">
+	<link rel="shortcut icon" href="/favicon.ico">
+		
+</head>
+<body class="body">
+	<div class="container container--outer">
+		<header class="header">
+	<div class="container">
+		<div class="logo">
+			<a class="logo__link" href="/" title="Matt&#39;s Home" rel="home">
+				<div class="logo__title">Matt&#39;s Home</div>
+				<div class="logo__tagline">无产阶级工人/Coder 🔨</div>
+			</a>
+		</div>
+		
+<nav class="menu">
+	<button class="menu__btn" aria-haspopup="true" aria-expanded="false" tabindex="0">
+		<span class="menu__btn-title" tabindex="-1">Menu</span>
+	</button>
+	<ul class="menu__list">
+		<li class="menu__item">
+			<a class="menu__link" href="/about/aboutme/">
+				
+				<span class="menu__text">About Me</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/about/aboutsite/">
+				
+				<span class="menu__text">About This Site</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="https://github.com/yuqingc/yuqingc.github.io/issues">
+				
+				<span class="menu__text">Feedback</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="https://github.com/yuqingc">
+				
+				<span class="menu__text">GitHub</span>
+				
+			</a>
+		</li>
+		<li class="menu__item">
+			<a class="menu__link" href="/categories/music/">
+				
+				<span class="menu__text">Music</span>
+				
+			</a>
+		</li>
+	</ul>
+</nav>
+
+	</div>
+</header>
+		<div class="wrapper flex">
+			<div class="primary">
+			
+<main class="main" role="main">
+	<article class="post">
+		<header class="post__header">
+			<h1 class="post__title">Cheatsheet 系列 之 HTTP（一）</h1>
+			<div class="post__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 30 28"><path d="M15 0C7 0 1 6 1 14s6 14 14 14 14-6 14-14S23 0 15 0zm0 25C9 25 4 20 4 14S9 3 15 3s11 5 11 11-5 11-11 11zm1-18h-2v8.4l6.8 4.4L22 18l-6-3.8V7z"/></svg>
+	<time class="meta__text" datetime="2020-07-22T22:50:17">July 22, 2020</time>
+</div>
+
+<div class="meta__item-categories meta__item">
+	<svg class="meta__icon icon icon-category" width="16" height="16" viewBox="0 0 16 16"><path d="m7 2l1 2h8v11h-16v-13z"/></svg>
+	<span class="meta__text"><a class="meta__link" href="/categories/blogs/" rel="category">blogs</a>
+	</span>
+</div></div>
+		</header>
+<div class="post__toc toc">
+	<div class="toc__title">Page content</div>
+	<div class="toc__menu">
+		<nav id="TableOfContents">
+  <ul>
+    <li><a href="#概览">概览</a>
+      <ul>
+        <li><a href="#http-的基本组件">HTTP 的基本组件</a></li>
+        <li><a href="#http-的特点">HTTP 的特点</a></li>
+        <li><a href="#http-连接">HTTP 连接</a></li>
+        <li><a href="#http-的控制范围">HTTP 的控制范围</a></li>
+        <li><a href="#http-流程">HTTP 流程</a></li>
+        <li><a href="#http-报文">HTTP 报文</a></li>
+        <li><a href="#基于-http-的-api">基于 HTTP 的 API</a></li>
+      </ul>
+    </li>
+    <li><a href="#http-报文-1">HTTP 报文</a>
+      <ul>
+        <li><a href="#概览-1">概览</a></li>
+        <li><a href="#http-request">HTTP Request</a></li>
+        <li><a href="#http-response">HTTP Response</a></li>
+        <li><a href="#http2-frame">HTTP/2 Frame</a></li>
+      </ul>
+    </li>
+    <li><a href="#http-缓存">HTTP 缓存</a>
+      <ul>
+        <li><a href="#缓存的种类">缓存的种类</a></li>
+        <li><a href="#缓存控制">缓存控制</a></li>
+        <li><a href="#缓存-freshness">缓存 freshness</a></li>
+        <li><a href="#缓存验证">缓存验证</a></li>
+        <li><a href="#vary-缓存">Vary 缓存</a></li>
+      </ul>
+    </li>
+    <li><a href="#cookie">Cookie</a>
+      <ul>
+        <li><a href="#概述">概述</a></li>
+        <li><a href="#创建-cookie">创建 Cookie</a></li>
+        <li><a href="#cookie-访问限制">Cookie 访问限制</a></li>
+        <li><a href="#域名和路径">域名和路径</a></li>
+        <li><a href="#安全问题">安全问题</a></li>
+      </ul>
+    </li>
+    <li><a href="#http-连接管理">HTTP 连接管理</a>
+      <ul>
+        <li><a href="#种类">种类</a></li>
+        <li><a href="#链接管理">链接管理</a></li>
+      </ul>
+    </li>
+    <li><a href="#http-协议升级">HTTP 协议升级</a>
+      <ul>
+        <li><a href="#步骤">步骤</a></li>
+        <li><a href="#websocket">WebSocket</a></li>
+      </ul>
+    </li>
+    <li><a href="#cors">CORS</a>
+      <ul>
+        <li><a href="#什么算-cross-origin">什么算 Cross-Origin</a></li>
+        <li><a href="#哪些请求适用-cors">哪些请求适用 CORS</a></li>
+        <li><a href="#同时满足下列条件浏览器不会发送-preflightoption-请求">同时满足下列条件浏览器不会发送 Preflight（OPTION 请求）</a></li>
+        <li><a href="#发送流程">发送流程</a></li>
+        <li><a href="#withcredentials"><code>withCredentials</code></a></li>
+        <li><a href="#相关-header">相关 Header</a></li>
+      </ul>
+    </li>
+    <li><a href="#http-压缩">HTTP 压缩</a>
+      <ul>
+        <li><a href="#文件格式压缩">文件格式压缩</a></li>
+        <li><a href="#hop-by-hop-压缩">Hop-by-hop 压缩</a></li>
+      </ul>
+    </li>
+    <li><a href="#http-重定向">HTTP 重定向</a>
+      <ul>
+        <li><a href="#原理">原理</a></li>
+        <li><a href="#其他重定向">其他重定向</a></li>
+        <li><a href="#使用场景">使用场景</a></li>
+      </ul>
+    </li>
+  </ul>
+</nav>
+	</div>
+</div>
+<div class="content post__content clearfix">
+			<p><em>打算开始更新 Sheetsheet 系列。记录一些容易遗漏的知识点。这是第一期：HTTP。</em></p>
+<hr>
+<h2 id="概览">概览</h2>
+<h3 id="http-的基本组件">HTTP 的基本组件</h3>
+<ul>
+<li>Client 客户端（user-agent）</li>
+<li>Server 服务端</li>
+<li>Proxy 代理</li>
+</ul>
+<h3 id="http-的特点">HTTP 的特点</h3>
+<ul>
+<li>简单</li>
+<li>可扩展</li>
+<li>Stateless, but not sessionless（无状态，但是有会话，可以通过 Cookie 存储会话信息和状态）</li>
+</ul>
+<h3 id="http-连接">HTTP 连接</h3>
+<ul>
+<li>无需关心底层协议（TCP）</li>
+<li>可以通过 <code>Connection</code> 这个 Header 字段来查看连接属性</li>
+<li>HTTP/1.0 默认每个请求一个单独的连接，默认 <code>Connection: close</code></li>
+<li>HTTP/1.1 默认开启 <code>keep-alive</code>，即每个会话中每个请求结束之后连接不关闭</li>
+<li>HTTP/2.0 支持连接多路复用，单个连接可以发送多个请求</li>
+</ul>
+<h3 id="http-的控制范围">HTTP 的控制范围</h3>
+<ul>
+<li>控制缓存。包括缓存的时机、内容、规则等</li>
+<li>限制/开放同源策略。浏览器默认禁止跨域（源）访问资源。但是 2010 年之后，这个限制放开了。服务端可以通过设置对应的 Header 来放开这些限制</li>
+<li>认证。通过特定的 Header 如 <code>WWW-Authenticate</code> 或 Cookie</li>
+<li>代理</li>
+<li>Session。通过 Cookie 实现有状态的 Session</li>
+</ul>
+<h3 id="http-流程">HTTP 流程</h3>
+<ol>
+<li>开启 TCP 连接。可以开启新连接、复用现有连接、甚至可以开启多个连接</li>
+<li>发送 HTTP 报文（message）。HTTP/1.x 中的报文是可阅读的字符串。HTTP/2 中的报文被封装成二进制的<strong>帧（frame）</strong></li>
+<li>服务端响应，客户端读取响应</li>
+<li>关闭连接</li>
+</ol>
+<h3 id="http-报文">HTTP 报文</h3>
+<ul>
+<li>
+<p>HTTP/1.x 的报文可读</p>
+</li>
+<li>
+<p>HTTP/2.x 的报文封装成了帧，二进制形式。支持压缩、复用，效率更高，更节省网络资源</p>
+</li>
+<li>
+<p>客户端重新组装 HTTP/2 的报文。组装后的报文格式可以是 HTTP/1.x 的格式。</p>
+</li>
+<li>
+<p><strong>报文分两种</strong></p>
+<ul>
+<li>请求报文</li>
+<li>响应报文</li>
+</ul>
+</li>
+</ul>
+<h4 id="请求报文的组成">请求报文的组成</h4>
+<ul>
+<li>method</li>
+<li>URL/Path</li>
+<li>HTTP 协议版本</li>
+<li>Header</li>
+<li>Body</li>
+</ul>
+<h4 id="响应报文的组成">响应报文的组成</h4>
+<ul>
+<li>HTTP 协议版本</li>
+<li>Status code</li>
+<li>Status message</li>
+<li>Header</li>
+<li>Body</li>
+</ul>
+<h3 id="基于-http-的-api">基于 HTTP 的 API</h3>
+<ul>
+<li>Ajax (<code>XMLHttpRequest</code>)</li>
+<li><code>Fetch API</code></li>
+<li>Server-sent Event (<code>EventSource</code>)</li>
+<li>注意 WebSocket API 不是基于 HTTP 协议，是基于 WebSocket 协议</li>
+</ul>
+<hr>
+<h2 id="http-报文-1">HTTP 报文</h2>
+<h3 id="概览-1">概览</h3>
+<ul>
+<li>分为 Request message 和 Response message</li>
+<li>HTTP/1.1 以前的报文是明文(ASCII)发送的</li>
+<li>HTTP/2 之后的报文是通过 HTTP Frame 发送的</li>
+</ul>
+<h4 id="request-和-response-共同都有的部分">Request 和 Response 共同都有的部分</h4>
+<ul>
+<li>Start line</li>
+<li>Headers</li>
+<li>空行</li>
+<li>可选的 body</li>
+</ul>
+<h3 id="http-request">HTTP Request</h3>
+<ul>
+<li>
+<p>Start line</p>
+<ul>
+<li>method + target + version</li>
+<li>如 <code>POST / HTTP/1.1</code></li>
+</ul>
+</li>
+<li>
+<p>Headers</p>
+<ul>
+<li>General Headers</li>
+<li>Request Headers</li>
+<li>Entity Headers 给 Body 使用，含有 Body 的某些属性。比如 <code>Content-Type</code></li>
+</ul>
+</li>
+<li>
+<p>Body</p>
+<ul>
+<li>单资源 Body。使用 <code>Content-Type</code> 和 <code>Content-Length</code> 定义</li>
+<li>多资源 Body。比如使用 HTML Form</li>
+</ul>
+</li>
+</ul>
+<h3 id="http-response">HTTP Response</h3>
+<ul>
+<li>Status line <code>HTTP/1.0 404 Not Found</code></li>
+<li>Headers
+<ul>
+<li>General Headers</li>
+<li>Request Headers</li>
+<li>Entity Headers</li>
+</ul>
+</li>
+<li>Body</li>
+</ul>
+<h3 id="http2-frame">HTTP/2 Frame</h3>
+<h4 id="http1x-报文的缺点">HTTP/1.x 报文的缺点</h4>
+<ul>
+<li>Header 无法像 Body 那样可以压缩</li>
+<li>不同报文的 header 很多字段都重复了，无法复用</li>
+<li>无法复用连接</li>
+</ul>
+<h4 id="http2-frame-1">HTTP/2 Frame</h4>
+<ul>
+<li>多路复用，高效利用 TCP 连接</li>
+<li>Frame 对于开发者来说是透明的，无需更改 API。客户端和服务端会自动解压</li>
+</ul>
+<hr>
+<h2 id="http-缓存">HTTP 缓存</h2>
+<h3 id="缓存的种类">缓存的种类</h3>
+<ul>
+<li>Private cache （浏览器缓存）</li>
+<li>Shared cache （proxy 缓存）</li>
+<li>其他缓存
+<ul>
+<li>gateway caches</li>
+<li>CDN</li>
+<li>reverse proxy caches</li>
+<li>load balancers</li>
+</ul>
+</li>
+</ul>
+<h3 id="缓存控制">缓存控制</h3>
+<h4 id="cache-control-header"><code>Cache-Control</code> Header</h4>
+<ul>
+<li><code>no-store</code> 完全不缓存</li>
+<li><code>no-cache</code> 发送缓存之前，服务端先验证该缓存</li>
+<li><code>public</code> 可以缓存在公共缓存代理服务器上</li>
+<li><code>private</code> 只能缓存在浏览器</li>
+<li><code>max-age=10000</code> 秒，相对于请求发起的时间</li>
+<li><code>must-revalidate</code> 缓存必须先验证过期资源的状态是否有效</li>
+</ul>
+<h4 id="pragma-header"><code>Pragma</code> Header</h4>
+<ul>
+<li>这是 HTTP/1.0 的字段</li>
+</ul>
+<h3 id="缓存-freshness">缓存 freshness</h3>
+<ul>
+<li>在过期时间之前，缓存是 fresh</li>
+<li>过期时间之后，缓存是 stale</li>
+<li>Stele 的缓存不会直接被清除或者忽略，而是会带上 <code>If-None-Match</code> 查询缓存是否仍然 fresh</li>
+<li>若缓存 fresh，服务端返回 <code>304(Not Modified)</code></li>
+</ul>
+<h4 id="缓存寿命计算顺序">缓存寿命计算顺序</h4>
+<ul>
+<li><code>Cache-Control: max-age=N</code> <code>N</code> 就是缓存寿命</li>
+<li><code>Expires - Date</code></li>
+<li><code>(Date - Last-Modified) / 10</code> 优先级最低，这个是一个估计的时间</li>
+</ul>
+<h3 id="缓存验证">缓存验证</h3>
+<h4 id="etag"><code>ETag</code></h4>
+<ul>
+<li><code>ETag</code> 是服务端返回的服务端定义的一个用来标识资源的额字符串。客户端无需知道其意义</li>
+<li>如果响应 Header 有 <code>ETag</code>，则客户端需要使用 <code>If-None-Match</code> 来进行缓存验证</li>
+<li><code>Last-Modified</code> 可以用来弱验证。通过 <code>If-Modified-Since</code> 向服务端发起验证</li>
+<li>服务端可以返回 <code>200 Ok</code> 和新的资源，也可以返回 <code>304 Not Modified</code>; <code>304</code> 可以带上新的 Header 来更新缓存的过期时间</li>
+</ul>
+<h3 id="vary-缓存">Vary 缓存</h3>
+<ul>
+<li>利用 <code>Vary</code> 字段区分缓存是否需要更新</li>
+<li>只有当缓存的 <code>Vary</code> 字段中规定的项目和新请求的 <code>Vary</code> 的字段匹配的时候，才会使用缓存资源</li>
+<li>比如 <code>Vary: User-Agent</code> 时，只有当缓存的 <code>User-Agent</code> 和请求的 <code>User-Agent</code> 匹配时，才会返回缓存的资源</li>
+</ul>
+<hr>
+<h2 id="cookie">Cookie</h2>
+<h3 id="概述">概述</h3>
+<ul>
+<li>Session 管理</li>
+<li>个性化</li>
+<li>跟踪用户行为（记录、统计）</li>
+<li>如果需要在客户端大量存储数据，建议使用 Web Storage API 和 IndexedDB</li>
+</ul>
+<h3 id="创建-cookie">创建 Cookie</h3>
+<h4 id="字段">字段</h4>
+<ul>
+<li>服务端响应带上 <code>Set-Cookie</code></li>
+<li>客户端发送请求带上 <code>Cookie</code></li>
+</ul>
+<h4 id="有效期">有效期</h4>
+<ul>
+<li>在 Cookie 中设置 <code>Expires</code></li>
+<li><code>Set-Cookie: id=a3fWa; Expires=Wed, 31 Oct 2021 07:28:00 GMT;</code></li>
+<li>如果没有设置，则默认值为 <code>session</code>，仅在浏览器关闭之前有效</li>
+</ul>
+<h3 id="cookie-访问限制">Cookie 访问限制</h3>
+<ul>
+<li>Cookie 中的 Secure 字段只允许 HTTPS 请求带上该 Cookie；HTTP 的服务器无法设置 Secure 字段</li>
+<li>设置了 <code>HttpOnly</code> 字段的 Cookie 无法被 JS 的 <code>Document.cookie</code> API 访问。可以有效预防 XSS 攻击</li>
+<li>示例 <code>Set-Cookie: id=a3fWa; Expires=Wed, 21 Oct 2021 07:28:00 GMT; Secure; HttpOnly</code></li>
+</ul>
+<h3 id="域名和路径">域名和路径</h3>
+<h4 id="domain-字段"><code>Domain</code> 字段</h4>
+<ul>
+<li>默认为设置该 Cookie 的域名，并且<strong>不包含</strong>子域名</li>
+<li>如果指定了 Domain，会包含子域名</li>
+</ul>
+<h4 id="path"><code>Path</code></h4>
+<ul>
+<li>指定了 <code>Path=/a</code>，则 <code>/a</code> 及其子路径都可以匹配</li>
+</ul>
+<h4 id="samesite"><code>SameSite</code></h4>
+<ul>
+<li>可以限制跨与请求发送 Cookie。（这里的注册的子域名 a.b.com 和 b.com 是同一个网站 site）</li>
+<li>可以防止 CSRF 攻击</li>
+<li>可以有以下值
+<ul>
+<li><code>Strict</code> 值允许同一个网站的请求</li>
+<li><code>Lax</code> 和 <code>Strict</code> 类似，但是从其他网站点链接导航到这个网站除外，这时候可以发送 Cookie</li>
+<li><code>None</code> 没有限制。但是现在的浏览器规定 <code>None</code> 只有在设置了 <code>Secure</code> 才会生效</li>
+</ul>
+</li>
+</ul>
+<h4 id="cookie-前缀规则">Cookie 前缀规则</h4>
+<ul>
+<li>
+<p>带有 <code>__Host-</code> 只有同时满足以下条件才会 <code>Set-Cookie</code> 生效</p>
+<ul>
+<li>设置了 <code>Secure</code></li>
+<li>来自 https</li>
+<li>没有设置 <code>Domain</code></li>
+<li><code>Path=/</code></li>
+</ul>
+</li>
+<li>
+<p><code>__Secure-</code> 宽松一些</p>
+<ul>
+<li>设置了 <code>Secure</code></li>
+<li>来自 https</li>
+</ul>
+</li>
+<li>
+<p>上述条件如果不满足，就会被浏览器拒绝</p>
+</li>
+</ul>
+<h4 id="js-操作-cookie">JS 操作 Cookie</h4>
+<ul>
+<li>JS 通过 <code>document.cookie</code> 读取和创建 Cookie</li>
+<li>JS 不能读取 <code>HttpOnly</code> 的 Cookie</li>
+<li>JS 不能创建带有 <code>HttpOnly</code> 的 Cookie</li>
+</ul>
+<h3 id="安全问题">安全问题</h3>
+<h4 id="第三方-cookie">第三方 Cookie</h4>
+<ul>
+<li>同一个域名的 Cookie 被成为第一方 Cookie</li>
+<li>不同域名的 Cookie 被成为第三方 Cookie</li>
+<li>第三方 Cookie 可以用来构建用户画像</li>
+<li>火狐默认阻止含有 tracker 的第三方 cookie</li>
+</ul>
+<h4 id="隐私政策">隐私政策</h4>
+<ul>
+<li>欧盟相关法律规定了必须告知用户 Cookie 的使用并且用户可以拒绝使用</li>
+</ul>
+<h2 id="http-连接管理">HTTP 连接管理</h2>
+<h3 id="种类">种类</h3>
+<ul>
+<li>短连接 short-lived connection 每次请求都要开一个新的 TCP 连接，性能不好</li>
+<li>长连接 persistent connection 多个请求之后才关闭连接</li>
+<li>流水线 pipelining 不需要等响应，可以先发送多个请求</li>
+</ul>
+<h3 id="链接管理">链接管理</h3>
+<ul>
+<li>使用了 Hop-by-hop 的 Header，比如 <code>Connection</code>。这种 Header 不允许通过 proxy 透传到最终的服务器（或反过来）。每一跳的连接都是不同的（我自己的理解）。不允许代理和缓存。</li>
+<li>另一种 Header 是 End-to-end 的。要求从客户端需要通过一层层代理，传到最终的服务器。proxy 需要转发，缓存也必须存下来。</li>
+</ul>
+<h2 id="http-协议升级">HTTP 协议升级</h2>
+<ul>
+<li>使用 <code>Upgrade</code> Header，允许把当前的连接转为另一个协议</li>
+<li>HTTP/1.1 的特性，一般用来启动 WebSocket</li>
+<li>HTTP/2 禁用了此特性</li>
+</ul>
+<h3 id="步骤">步骤</h3>
+<ul>
+<li>客户端发起一个请求 <code>Connection: upgrade</code> 和 <code>Upgrade: 新协议名</code></li>
+<li>如果服务端可以，则返回 <code>101 Switching Protocols</code> 然后开始新的协议的连接</li>
+<li>如果服务端不支持，则返回普通的 <code>200 Ok</code></li>
+</ul>
+<h3 id="websocket">WebSocket</h3>
+<h4 id="开启-websocket">开启 WebSocket</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js"><span style="color:#a6e22e">webSocket</span> <span style="color:#f92672">=</span> <span style="color:#66d9ef">new</span> <span style="color:#a6e22e">WebSocket</span>(<span style="color:#e6db74">&#34;ws://destination.server.ext&#34;</span>, <span style="color:#e6db74">&#34;optionalProtocol&#34;</span>);
+</code></pre></div><ul>
+<li>
+<p>调用这个 API，浏览器会自动处理由 HTTP/1 到 WebSocket 的升级。如果需要自己处理，那就要自己处理 TCP 握手。</p>
+</li>
+<li>
+<p>需要包含下列 Header</p>
+<pre><code>Connection: Upgrade
+Upgrade: websocket
+</code></pre></li>
+</ul>
+<h4 id="websocket-相关的其他-header">WebSocket 相关的其他 Header</h4>
+<ul>
+<li>参考 <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Protocol_upgrade_mechanism#Upgrading_to_a_WebSocket_connection">https://developer.mozilla.org/en-US/docs/Web/HTTP/Protocol_upgrade_mechanism#Upgrading_to_a_WebSocket_connection</a></li>
+</ul>
+<h2 id="cors">CORS</h2>
+<p>如果 CORS 失败了，JS 无法捕获错，只能通过控制台看到错误日志</p>
+<h3 id="什么算-cross-origin">什么算 Cross-Origin</h3>
+<p>只要下列有一项不同，即为 Cross-Origin（所谓的“跨域”，其实我认为翻译成“跨源”更为准确）</p>
+<ul>
+<li>协议</li>
+<li>域名</li>
+<li>端口号</li>
+</ul>
+<h3 id="哪些请求适用-cors">哪些请求适用 CORS</h3>
+<ul>
+<li>
+<p>Ajax 或 <code>Fetch API</code> 发送的请求</p>
+</li>
+<li>
+<p>Web Fonts （在 CSS 中使用 <code>@font-face</code> 定义的字体）</p>
+</li>
+<li>
+<p>WebGL Texture</p>
+</li>
+<li>
+<p>使用 <code>drawImage()</code> 的 Canvas</p>
+</li>
+<li>
+<p>使用图片的 CSS Shapes</p>
+</li>
+</ul>
+<h3 id="同时满足下列条件浏览器不会发送-preflightoption-请求">同时满足下列条件浏览器不会发送 Preflight（OPTION 请求）</h3>
+<ul>
+<li>
+<p>Method 为下列之一</p>
+<ul>
+<li>
+<p>GET</p>
+</li>
+<li>
+<p>HEAD</p>
+</li>
+<li>
+<p>POST</p>
+</li>
+</ul>
+</li>
+<li>
+<p>手动设置的 Header 只能是：</p>
+<pre><code>Accept
+Accept-Language
+Content-Language
+Content-Type (but note the additional requirements below)
+DPR
+Downlink
+Save-Data
+Viewport-Width
+Width
+</code></pre></li>
+<li>
+<p><code>Content-Type</code> 只允许：</p>
+<ul>
+<li>
+<p><code>application/x-www-form-urlencoded</code></p>
+</li>
+<li>
+<p><code>multipart/form-data</code></p>
+</li>
+<li>
+<p><code>text/plain</code></p>
+</li>
+</ul>
+</li>
+<li>
+<p>不能监听任何 <code>XMLHttpRequestUpload</code> 对象，即 <code>XMLHttpRequest.upload</code></p>
+</li>
+<li>
+<p>请求不能使用 <code>ReadableStream</code></p>
+</li>
+</ul>
+<h3 id="发送流程">发送流程</h3>
+<ul>
+<li>
+<p>Request</p>
+<ul>
+<li>发送 OPTIONS 请求</li>
+<li>发送 <code>Access-Control-Request-Method</code> 和 <code>Access-Control-Request-Headers</code></li>
+</ul>
+</li>
+<li>
+<p>响应</p>
+<ul>
+<li>响应 Header 包含</li>
+</ul>
+<pre><code>Access-Control-Allow-Origin: http://foo.example
+Access-Control-Allow-Methods: POST, GET, OPTIONS
+Access-Control-Allow-Headers: X-PINGOTHER, Content-Type
+Access-Control-Max-Age: 86400
+</code></pre></li>
+</ul>
+<h3 id="withcredentials"><code>withCredentials</code></h3>
+<ul>
+<li>浏览器发送任何跨与请求时，默认不会带上 Cookie</li>
+<li>把 Ajax 或 Fetch 的 <code>withCredentials</code> 设置为 <code>true</code> 会发送 Cookie</li>
+<li>如果服务端的返回 Header 没有 <code>Access-Control-Allow-Credentials: true</code> 浏览器会拒绝返回的内容</li>
+</ul>
+<h4 id="关于-access-control-allow-origin-的通配符">关于 <code>Access-Control-Allow-Origin</code> 的通配符</h4>
+<ul>
+<li>服务端在响应带有 Cookie 的跨域请求时，必须指定 <code>Access-Control-Allow-Origin</code>，而不能用 <code>*</code> 通配符</li>
+</ul>
+<h3 id="相关-header">相关 Header</h3>
+<ul>
+<li>
+<p>Response Headers</p>
+<pre><code>Access-Control-Allow-Origin
+Access-Control-Allow-Methods
+Access-Control-Allow-Headers
+Access-Control-Expose-Headers 允许客户端可以读取到的 Header
+Access-Control-Max-Age
+Access-Control-Allow-Credentials
+</code></pre></li>
+<li>
+<p>Request Headers</p>
+<pre><code>Origin
+Access-Control-Request-Method
+Access-Control-Request-Headers
+</code></pre></li>
+</ul>
+<h2 id="http-压缩">HTTP 压缩</h2>
+<p>HTTP 压缩有三个层面</p>
+<ul>
+<li>文件格式压缩</li>
+<li>端到端压缩（end to end）</li>
+<li>节点之间的压缩（hop by hop）</li>
+</ul>
+<h3 id="文件格式压缩">文件格式压缩</h3>
+<ul>
+<li>无损压缩 <code>gif</code> 和 <code>png</code></li>
+<li>有损压缩，Web 视频以及 <code>jpeg</code></li>
+</ul>
+<p>有些格式既可以有损，也可以用作无损压缩，比如 <code>webp</code></p>
+<p><em>已经压缩过的文件不要使用以下的压缩技术</em></p>
+<h4 id="端到端压缩">端到端压缩</h4>
+<ul>
+<li>服务端压缩，中间的 proxy 不动数据，直到客户端解压</li>
+<li>常用的压缩算法
+<ul>
+<li>gzip，最常用</li>
+<li>br，新的</li>
+</ul>
+</li>
+</ul>
+<h4 id="过程">过程</h4>
+<ul>
+<li>客户端请求带上 <code>Accept-Encoding</code></li>
+<li>服务端带上 <code>Content-Encoding</code> 和 <code>Vary: Accept-Encoding</code> 的 Header 以及经过压缩的内容</li>
+<li>建议所有的内容都要这样压缩，除了已经压缩的图片或者视频</li>
+</ul>
+<h3 id="hop-by-hop-压缩">Hop-by-hop 压缩</h3>
+<p>不同节点之间的压缩协议</p>
+<ul>
+<li>使用 <code>Transfer-Encoding</code> header，一般在代理服务器使用，对于客户端和服务端两个终端来说是透明的</li>
+</ul>
+<h2 id="http-重定向">HTTP 重定向</h2>
+<p>Redirect 也叫 Forwarding。实现了以下功能：</p>
+<ul>
+<li>临时 比如服务器暂时不可用的时候</li>
+<li>永久</li>
+</ul>
+<h3 id="原理">原理</h3>
+<ul>
+<li>服务端返回 <code>3xx</code> 状态码</li>
+<li>Header 中的 <code>Location</code> 带有重定向的 URL</li>
+<li>浏览器收到 URL 之后马上请求新的 URL，用户一般很难察觉</li>
+</ul>
+<p>重定向氛围下面的种类</p>
+<ul>
+<li>永久重定向</li>
+<li>临时重定向</li>
+<li>特殊重定向</li>
+</ul>
+<h4 id="永久重定向">永久重定向</h4>
+<p>搜索引擎、RSS 等爬虫会因此更新新的 URL</p>
+<ul>
+<li><code>301 Moved Permanently</code> 重定向，GET 不变，允许 Method 改变</li>
+<li><code>308 Permanent Redirect</code> 不允许 Method 由 POST 改为 GET</li>
+</ul>
+<h4 id="临时重定向">临时重定向</h4>
+<ul>
+<li><code>302 Found</code> GET 不变，其他方法不能变为 GET</li>
+<li><code>303 See Other</code> GET 不变，其他方法变为 GET（去掉 body）</li>
+<li><code>307 Temporary Redirect</code> Method 不允许改变</li>
+</ul>
+<h4 id="特殊重定向">特殊重定向</h4>
+<ul>
+<li><code>300 Multiple Choice</code></li>
+<li><code>304 Not Modified</code> 用于重新验证缓存的请求，缓存的资源还没过期</li>
+</ul>
+<h3 id="其他重定向">其他重定向</h3>
+<h4 id="html-重定向">HTML 重定向</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-html" data-lang="html">&lt;<span style="color:#f92672">head</span>&gt; 
+  <span style="color:#75715e">&lt;!-- 0 代表重定向之前等待的时间 --&gt;</span>
+  &lt;<span style="color:#f92672">meta</span> <span style="color:#a6e22e">http-equiv</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;Refresh&#34;</span> <span style="color:#a6e22e">content</span><span style="color:#f92672">=</span><span style="color:#e6db74">&#34;0; URL=https://example.com/&#34;</span>&gt;
+&lt;/<span style="color:#f92672">head</span>&gt;
+</code></pre></div><h4 id="js-重定向">JS 重定向</h4>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-js" data-lang="js">window.<span style="color:#a6e22e">location</span> <span style="color:#f92672">=</span> <span style="color:#e6db74">&#39;&#39;</span>
+</code></pre></div><h3 id="使用场景">使用场景</h3>
+<p>参考 <a href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections">https://developer.mozilla.org/en-US/docs/Web/HTTP/Redirections</a></p>
+		</div>
+		<footer class="post__footer">
+			
+<div class="post__tags tags clearfix">
+	<svg class="tags__badge icon icon-tag" width="16" height="16" viewBox="0 0 32 32"><path d="M32 19c0 1-1 2-1 2L21 31s-1 1-2 1-2-1-2-1L2 16c-1-1-1.4-2-1.4-2S0 12.5 0 11V3C0 1.5.8.8.8.8S1.5 0 3 0h8c1.5 0 3 .6 3 .6S15 1 16 2l15 15s1 1 1 2zM7 10a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/></svg>
+	<ul class="tags__list">
+		<li class="tags__item"><a class="tags__link btn" href="/tags/http/" rel="tag">http</a></li>
+		<li class="tags__item"><a class="tags__link btn" href="/tags/cheatsheet/" rel="tag">cheatsheet</a></li>
+	</ul>
+</div>
+		</footer>
+	</article>
+</main>
+
+<div class="authorbox clearfix">
+	<figure class="authorbox__avatar">
+		<img alt="Matt avatar" src="/images/avatar.jpg" class="avatar" height="90" width="90">
+	</figure>
+	<div class="authorbox__header">
+		<span class="authorbox__name">About Matt</span>
+	</div>
+	<div class="authorbox__description">
+		当我和世界初相见 当我曾经是少年
+	</div>
+</div>
+
+<nav class="post-nav flex">
+	<div class="post-nav__item post-nav__item--prev">
+		<a class="post-nav__link" href="/posts/flutter/flutter-starter/" rel="prev"><span class="post-nav__caption">«&thinsp;Previous</span><p class="post-nav__post-title">Flutter 防坑日记</p></a>
+	</div>
+	<div class="post-nav__item post-nav__item--next">
+		<a class="post-nav__link" href="/posts/go/go-module-tutorial/" rel="next"><span class="post-nav__caption">Next&thinsp;»</span><p class="post-nav__post-title">使用 Go Modules</p></a>
+	</div>
+</nav>
+
+
+			</div>
+			<aside class="sidebar">
+<div class="widget-recent widget">
+	<h4 class="widget__title">Recent Posts</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item"><a class="widget__link" href="/posts/go/go-module-tutorial/">使用 Go Modules</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/cheatsheets/http-cheatsheet/">Cheatsheet 系列 之 HTTP（一）</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/flutter/flutter-starter/">Flutter 防坑日记</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/others/yi/">☯️ 周易筮算</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/others/clean-code/">代码看起来越“干净”越好？？？</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/js/sse-express/">使用 Node.js 实现一个简单的 SSE 服务</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/js/new-of-es2020/">What&#39;s New in ECMAScript 2020 (ES11)</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/js/data-bindings-react-vue/">Thoughts of Data Bindings Strategies in React and Vue</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/js/snippets01/">Useful JavaScript Snippets</a></li>
+			<li class="widget__item"><a class="widget__link" href="/posts/linux/manjaro-tricks/">Manjaro 踩坑记</a></li>
+		</ul>
+	</div>
+</div>
+<div class="widget-categories widget">
+	<h4 class="widget__title">Categories</h4>
+	<div class="widget__content">
+		<ul class="widget__list">
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/about/">about</a>
+			</li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/blogs/">blogs</a>
+			</li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/music/">music</a>
+			</li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/notes/">notes</a>
+			</li>
+			<li class="widget__item">
+				<a class="widget__link" href="/categories/quotes/">quotes</a>
+			</li>
+		</ul>
+	</div>
+</div>
+<div class="widget-taglist widget">
+	<h4 class="widget__title">Tags</h4>
+	<div class="widget__content">
+		<a class="widget-taglist__link widget__link btn" href="/tags/cheatsheet/" title="cheatsheet">cheatsheet (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/flutter/" title="flutter">flutter (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/go/" title="go">go (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/http/" title="http">http (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/javascript/" title="javascript">javascript (7)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/linux/" title="linux">linux (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/manjaro/" title="manjaro">manjaro (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/music/" title="music">music (3)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/profile/" title="profile">profile (2)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/react/" title="react">react (4)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/ssr/" title="ssr">ssr (1)</a>
+		<a class="widget-taglist__link widget__link btn" href="/tags/vue/" title="vue">vue (1)</a>
+	</div>
+</div>
+<div class="widget-social widget">
+	<h4 class="widget-social__title widget__title">Social</h4>
+	<div class="widget-social__content widget__content">
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="GitHub" rel="noopener noreferrer" href="https://github.com/yuqingc" target="_blank">
+				<svg class="widget-social__link-icon icon icon-github" width="24" height="24" viewBox="0 0 384 374"><path d="m192 0c-106.1 0-192 85.8-192 191.7 0 84.7 55 156.6 131.3 181.9 9.6 1.8 13.1-4.2 13.1-9.2 0-4.6-.2-16.6-.3-32.6-53.4 11.6-64.7-25.7-64.7-25.7-8.7-22.1-21.3-28-21.3-28-17.4-11.9 1.3-11.6 1.3-11.6 19.3 1.4 29.4 19.8 29.4 19.8 17.1 29.3 44.9 20.8 55.9 15.9 1.7-12.4 6.7-20.8 12.2-25.6-42.6-4.8-87.5-21.3-87.5-94.8 0-20.9 7.5-38 19.8-51.4-2-4.9-8.6-24.3 1.9-50.7 0 0 16.1-5.2 52.8 19.7 15.3-4.2 31.7-6.4 48.1-6.5 16.3.1 32.7 2.2 48.1 6.5 36.7-24.8 52.8-19.7 52.8-19.7 10.5 26.4 3.9 45.9 1.9 50.7 12.3 13.4 19.7 30.5 19.7 51.4 0 73.7-44.9 89.9-87.7 94.6 6.9 5.9 13 17.6 13 35.5 0 25.6-.2 46.3-.2 52.6 0 5.1 3.5 11.1 13.2 9.2 76.2-25.5 131.2-97.3 131.2-182 0-105.9-86-191.7-192-191.7z"/></svg>
+				<span>GitHub</span>
+			</a>
+		</div>
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="Email" href="mailto:mr.chenyuqing@live.com">
+				<svg class="widget-social__link-icon icon icon-mail" width="24" height="24" viewBox="0 0 416 288"><path d="m0 16v256 16h16 384 16v-16-256-16h-16-384-16zm347 16-139 92.5-139-92.5zm-148 125.5 9 5.5 9-5.5 167-111.5v210h-352v-210z"/></svg>
+				<span>mr.chenyuqing@live.com</span>
+			</a>
+		</div>
+
+		
+		<div class="widget-social__item widget__item">
+			<a class="widget-social__link widget__link btn" title="(゜-゜)つロ 干杯~" rel="noopener noreferrer" href="https://space.bilibili.com/76849204" target="_blank">
+					<svg t="1575645314188" class="widget-social__link-icon  icon" width="24" height="24" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"><path d="M777.514667 131.669333a53.333333 53.333333 0 0 1 0 75.434667L728.746667 255.829333h49.92A160 160 0 0 1 938.666667 415.872v320a160 160 0 0 1-160 160H245.333333A160 160 0 0 1 85.333333 735.872v-320a160 160 0 0 1 160-160h49.749334L246.4 207.146667a53.333333 53.333333 0 1 1 75.392-75.434667l113.152 113.152c3.370667 3.370667 6.186667 7.04 8.448 10.965333h137.088c2.261333-3.925333 5.12-7.68 8.490667-11.008l113.109333-113.152a53.333333 53.333333 0 0 1 75.434667 0z m1.152 231.253334H245.333333a53.333333 53.333333 0 0 0-53.205333 49.365333l-0.128 4.010667v320c0 28.117333 21.76 51.157333 49.365333 53.162666l3.968 0.170667h533.333334a53.333333 53.333333 0 0 0 53.205333-49.365333l0.128-3.968v-320c0-29.44-23.893333-53.333333-53.333333-53.333334z m-426.666667 106.666666c29.44 0 53.333333 23.893333 53.333333 53.333334v53.333333a53.333333 53.333333 0 1 1-106.666666 0v-53.333333c0-29.44 23.893333-53.333333 53.333333-53.333334z m320 0c29.44 0 53.333333 23.893333 53.333333 53.333334v53.333333a53.333333 53.333333 0 1 1-106.666666 0v-53.333333c0-29.44 23.893333-53.333333 53.333333-53.333334z"></path></svg>
+				<span>(゜-゜)つロ 干杯~</span>
+			</a>
+		</div>
+		
+	</div>
+</div>
+</aside>
+		</div>
+		<footer class="footer">
+	<div class="container footer__container flex">
+		
+		<div class="footer__copyright">
+			&copy; 2020 yuqingc.
+			<span class="footer__copyright-credits">Generated with <a href="https://gohugo.io/" rel="nofollow noopener" target="_blank">Hugo</a> and <a href="https://github.com/Vimux/Mainroad/" rel="nofollow noopener" target="_blank">Mainroad</a> theme.</span>
+		</div>
+	</div>
+</footer>
+	</div>
+<script async defer src="/js/menu.js"></script>
+</body>
+</html>

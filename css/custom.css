@@ -1,0 +1,10 @@
+/* Fix code snippet style under table mode */
+.highlight table pre {
+  border: none;
+  padding: 0 10px;
+}
+/* Rewrite <a> tag style in markdown content */
+.content a {
+  text-decoration: underline;
+  font-weight: 600;
+}

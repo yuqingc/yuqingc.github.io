@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>notes on Matt&#39;s Home</title>
+    <link>/categories/notes/</link>
+    <description>Recent content in notes on Matt&#39;s Home</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Tue, 03 Dec 2019 19:59:01 +0800</lastBuildDate>
+    
+	<atom:link href="/categories/notes/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>What&#39;s New in ECMAScript 2020 (ES11)</title>
+      <link>/posts/js/new-of-es2020/</link>
+      <pubDate>Tue, 03 Dec 2019 19:59:01 +0800</pubDate>
+      
+      <guid>/posts/js/new-of-es2020/</guid>
+      <description>&lt;p&gt;The latest draft of &lt;a href=&#34;https://tc39.es/ecma262/&#34;&gt;ECMAScript 2020&lt;/a&gt; was release on November 27 2019. All proposals in Stage 4 are included in this version of the language.&lt;/p&gt;</description>
+    </item>
+    
+    <item>
+      <title>Useful JavaScript Snippets</title>
+      <link>/posts/js/snippets01/</link>
+      <pubDate>Wed, 24 Jul 2019 15:42:31 +0800</pubDate>
+      
+      <guid>/posts/js/snippets01/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Categories on Matt&#39;s Home</title>
+    <link>/categories/</link>
+    <description>Recent content in Categories on Matt&#39;s Home</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Mon, 31 Aug 2020 10:50:17 +0800</lastBuildDate>
+    
+	<atom:link href="/categories/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>blogs</title>
+      <link>/categories/blogs/</link>
+      <pubDate>Mon, 31 Aug 2020 10:50:17 +0800</pubDate>
+      
+      <guid>/categories/blogs/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>notes</title>
+      <link>/categories/notes/</link>
+      <pubDate>Tue, 03 Dec 2019 19:59:01 +0800</pubDate>
+      
+      <guid>/categories/notes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>music</title>
+      <link>/categories/music/</link>
+      <pubDate>Thu, 14 Nov 2019 21:26:13 +0800</pubDate>
+      
+      <guid>/categories/music/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>quotes</title>
+      <link>/categories/quotes/</link>
+      <pubDate>Fri, 12 Jul 2019 15:08:20 +0800</pubDate>
+      
+      <guid>/categories/quotes/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>about</title>
+      <link>/categories/about/</link>
+      <pubDate>Thu, 17 Jan 2019 10:37:40 +0000</pubDate>
+      
+      <guid>/categories/about/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
