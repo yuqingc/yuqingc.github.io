@@ -3,6 +3,21 @@
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   
   <url>
+    <loc>/</loc>
+    <lastmod>2020-09-01T15:21:10+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/</loc>
+    <lastmod>2020-09-01T15:21:10+08:00</lastmod>
+  </url>
+  
+  <url>
+    <loc>/posts/others/test-migrate/</loc>
+    <lastmod>2020-09-01T15:21:10+08:00</lastmod>
+  </url>
+  
+  <url>
     <loc>/categories/blogs/</loc>
     <lastmod>2020-08-31T10:50:17+08:00</lastmod>
   </url>
@@ -14,16 +29,6 @@
   
   <url>
     <loc>/tags/go/</loc>
-    <lastmod>2020-08-31T10:50:17+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/</loc>
-    <lastmod>2020-08-31T10:50:17+08:00</lastmod>
-  </url>
-  
-  <url>
-    <loc>/posts/</loc>
     <lastmod>2020-08-31T10:50:17+08:00</lastmod>
   </url>
   
