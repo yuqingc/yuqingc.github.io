@@ -6,19 +6,10 @@
     <description>Recent content on Matt&#39;s Home</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Tue, 01 Sep 2020 15:21:10 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 31 Aug 2020 10:50:17 +0800</lastBuildDate>
     
 	<atom:link href="/index.xml" rel="self" type="application/rss+xml" />
     
-    
-    <item>
-      <title>Test Migrate</title>
-      <link>/posts/others/test-migrate/</link>
-      <pubDate>Tue, 01 Sep 2020 15:21:10 +0800</pubDate>
-      
-      <guid>/posts/others/test-migrate/</guid>
-      <description>test hello world</description>
-    </item>
     
     <item>
       <title>使用 Go Modules</title>
