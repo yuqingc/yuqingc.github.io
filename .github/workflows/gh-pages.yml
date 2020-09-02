@@ -4,6 +4,12 @@ on:
   push:
     branches:
       - master  # Set a branch to deploy
+    paths-ignore:
+      - 'README.md'
+      - '.env'
+      - '.gitignore'
+      - '.gitmodules'
+      - 'bin'
 
 jobs:
   deploy:
