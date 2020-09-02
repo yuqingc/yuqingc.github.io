@@ -1,5 +1,7 @@
 # yuqingc.github.io
 
+![GithubPages](https://github.com/yuqingc/yuqingc.github.io/workflows/gh-pages/badge.svg)
+
 The `master` branch contains all source codes for the page. Generated contents are at the [`gh-page`](https://github.com/yuqingc/yuqingc.github.io/tree/gh-pages) branch.
 
 ## Get Started
