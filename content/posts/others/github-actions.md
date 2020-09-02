@@ -224,7 +224,9 @@ GitHub 内置了一些标准的 Action。在下列情况下必须在你的其他
 
 ### 给仓库添加 Workflow 状态的图标（Badge）
 
-如果 name 使用了空格等特殊字符，需要转义，如空格对应 `%20`
+- 如果 name 使用了空格等特殊字符，需要转义，如空格对应 `%20`
+
+- 注意 `<WORKFLOW_NAME>` 为 YAML 文件中的 name，而非配置文件的文件名
 
 ```
 https://github.com/<OWNER>/<REPOSITORY>/workflows/<WORKFLOW_NAME>/badge.svg
