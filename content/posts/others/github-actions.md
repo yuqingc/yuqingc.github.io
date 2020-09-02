@@ -242,7 +242,7 @@ https://github.com/<OWNER>/<REPOSITORY>/workflows/<WORKFLOW_NAME>/badge.svg
 
 ---
 
-待续。。。
+待续...
 
 ---
 

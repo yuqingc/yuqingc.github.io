@@ -36,8 +36,14 @@ The `master` branch contains all source codes for the page. Generated contents a
     $ hugo
     ```
 
-- Publish
+## Deployment
+
+### Deploy manually
 
     ```
     $ ./bin/publish_to_ghpages.sh
     ```
+
+### With GitHub Actions
+
+This Repository has been configured for deployment with GitHub Actions. See https://github.com/yuqingc/yuqingc.github.io/actions
