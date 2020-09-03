@@ -1,15 +1,38 @@
 ---
-title: "了解一下 GitHub Actions"
+title: "使用 GitHub Actions 高效部署你的博客"
 date: 2020-09-02T11:11:49+08:00
+lead: "最近没事干，给我的博客配了个 GitHub Actions 玩玩。。。"
 draft: false
 toc: false
 categories:
   - notes
 ---
 
-GitHub 推出了 Actions 之后，我们可以直接在 GitHub 上实现自动集成和部署，而不需要依赖第三方 CI 工具例如 TravisCI、CircleCI 等。
+自从用了 GitHub Actions 之后，都有时间陪女朋友了（假装有）。
 
 <!--more-->
+
+GitHub 推出了 Actions 之后，我们可以直接在 GitHub 上实现自动集成和部署，而不需要依赖第三方 CI 工具例如 TravisCI、CircleCI 等。
+
+## 曾经踩过的坑
+
+这篇博客部署在了 [GitHub Pages](https://pages.github.com/) 上。因为使用了 [Hugo](https://gohugo.io/) 把 Markdown 文档生成静态页面，所以文章和 Hugo 的配置文件需要和生成的 HTML 代码分开存放。
+
+GitHub Page 支持部署 *指定分支* 下的 *指定文件夹* 内的 HTML 内容（在仓库的 `Settings` 可以设置）。如果 *只考虑* 手动部署，有三种管理代码的方案。我们假设编译完生成的 HTML 放在名为 `public/` 的文件夹下：
+
+1. 把源码和 `public/` 放在同一个分支（master），并指定 master 分支下的 `public/` 文件夹为部署的路径
+
+2. 把 `public/` 的内容单独放在主仓库，把源码放在另一个仓库，并添加 `public/` 文件夹为其 [Submodule](https://git-scm.com/docs/git-submodule)
+
+3. 源码和 `public/` 存放在同一个仓库下，源码放在 master 分支，`public/` 内容放在另一个分支（如 gh-pages），并指定部署 `gh-pages` 分支的内容
+
+方案一因为要把生成的代码和源码同时纳入版本控制，因此会使得源码很乱，不可取。
+
+之前一直使用的方案二，给源码单独开了一个[仓库](https://github.com/yuqingc/homepage-src)。但是需要管理 2 个代码仓库，并且 Submodule 的 commit 发生改变时，也会影响源代码仓库的 Git 历史。
+
+后来，我把源码迁移到了和 HTML 同一个仓库，采用了方案三。使用 [git worktree](https://git-scm.com/docs/git-worktree)，可以把同一个仓库的其他分支映射为当前工作区的一个文件夹下。这样就避免了频繁切换分支。具体操作可以参考博客的手动部署[脚本](https://github.com/yuqingc/yuqingc.github.io/blob/master/bin/publish_to_ghpages.sh)。或者参考 Hugo 关于部署的 [文档](https://gohugo.io/hosting-and-deployment/hosting-on-github/#deployment-of-project-pages-from-your-gh-pages-branch)。
+
+在方案三的基础上，我们可以只用 GitHub Actions 自动构建，并且把代码部署到 gh-pages 分支。每当我们往 master 推送新的内容时，就会自动触发编译，并且，Workflow 会把编译生成的 HTML 自动部署到指定的分支。在开始行动之前，先了解一下 GitHub Action 中的一些基本概念，有助于我们了解和使用 GitHub Action。
 
 ## 一些基础概念
 
@@ -52,6 +75,8 @@ GitHub 推出了 Actions 之后，我们可以直接在 GitHub 上实现自动�
                   +---------------------------+
 
 ```
+
+*（流程图由 http://asciiflow.com/ 生成）*
 
 ### TL;DR
 
@@ -240,10 +265,71 @@ https://github.com/<OWNER>/<REPOSITORY>/workflows/<WORKFLOW_NAME>/badge.svg
 
 更多示例和参数，请参考文档
 
+## 使用第三方 Action 部署博客
+
+我们可以在 Workflow 中使用 GitHub [官方的 Action](https://github.com/actions/)。也可以在 GitHub 的[应用商店](https://github.com/marketplace?type=actions) 找到开源的 Action。
+
+我们的项目使用了两个第三方的 Action
+
+- [Hugo setup](https://github.com/marketplace/actions/hugo-setup) 依赖构建代码
+
+- [GitHub Pages action](https://github.com/marketplace/actions/github-pages-action) 用来把构建完成的内容部署到 GitHub Pages
+
+项目配置非常简单。首先在仓库的根目录创建 `.github/workflows/gh-pages.yml` 文件。如果看不懂这个文件，可以先阅读一下[上文](#一些基础概念)。
+
+```yaml
+name: GitHubPages
+
+on:
+  push:
+    branches:
+      - master  # 指定了用于部署的源码所在的分支
+    paths-ignore:
+      - 'README.md'
+      - '.env'
+      - '.gitignore'
+      - '.gitmodules'
+      - 'bin'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-18.04
+    steps:
+      - uses: actions/checkout@v2 # 上文提到了第一步必须使用 checkout Action
+        with:
+          submodules: recursive  # 获取 Hugo 的主题，主题放在 submodule 中 (true OR recursive)
+          fetch-depth: 0    # Fetch all history for .GitInfo and .Lastmod
+
+      - name: Read .env
+        id: hugo-version
+        run: | # 从 .env 文件中读取 HUGO 的版本号
+          . ./.env
+          echo "::set-output name=HUGO_VERSION::${HUGO_VERSION}"
+
+      - name: Setup Hugo
+        uses: peaceiris/actions-hugo@v2 # 使用第三方 Action 进行构建
+        with:
+          hugo-version: '${{ steps.hugo-version.outputs.HUGO_VERSION }}'
+          # extended: true
+
+      - name: Build
+        run: hugo --minify
+
+      - name: Deploy
+        uses: peaceiris/actions-gh-pages@v3 # 使用第三方 Action 把构建完成的 Artifact 部署到指定分支
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: gh-pages
+
+```
+
+需要注意一点。在 `Deploy` 这个 Step 中使用了 `github_token`。`github_token` 是 GitHub Action 在 Workflow 中自动创建的用于权限认证的 token。使用 `${{ secrets.GITHUB_TOKEN }}` 变量可以读取到该 token，不需要额外进行配置。
+
+权限认证除了 `github_token`，还可以使用 `deploy_key` 和 `personal_token`。这些都可以在代码仓库进行配置。
+
+具体配置和操作步骤可以参考文档。
+
+配置完成之后，就可以把代码 push 到 master 分支了。下次检测到 master 上代码更新的时候，就会自动触发 Workflow 了。这样就不用每次手动部署了。我们需要做的，仅仅是写文档、push。
+
 ---
-
-待续...
-
----
-
-本文流程图由 http://asciiflow.com/ 生成
+*Authored by <a target="_blank" href="https://github.com/yuqingc">@yuqingc</a> 转载请注明出处*
