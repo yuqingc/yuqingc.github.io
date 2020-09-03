@@ -176,19 +176,4 @@ $ sudo pacman -Syu noto-fonts-emoji
 ## Last but not least，[论坛](https://forum.manjaro.org/) 是个好东西
 
 ---
-
-*最后赠送一组 Manjaro 高清壁纸，点击下方图片名即可预览并下载图片* 👇
-
-- 👉 <a style="text-align: center" target="_blank" href="/images/manjaro/matrix-manjaro.jpg">Matrix Manjaro</a>
-
-- 👉 <a style="text-align: center" target="_blank" href="/images/manjaro/manjaro-cat.jpg">Manjaro Cat</a>
-
-- 👉 <a style="text-align: center" target="_blank" href="/images/manjaro/manjaro-dog.jpg">Manjaro Dog</a>
-
-- 👉 <a style="text-align: center" target="_blank" href="/images/manjaro/light-stripe-maia.jpg">Light Stripe Maia</a>
-
-> 图片位于 `/usr/share/backgrounds` 目录, 版权所有 [@Manjaro Linux](https://manjaro.org/). All above pictures' rights are reserved by [@Manjaro Linux](https://manjaro.org/)
-
-
----
 *Authored by <a target="_blank" href="https://github.com/yuqingc">@yuqingc</a> 转载请注明出处*

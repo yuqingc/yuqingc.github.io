@@ -68,16 +68,12 @@ publishDir = "public" # Incase the default public dir change
 [menu]
 
   [[menu.main]]
-    identifier = "github"
-    name = "GitHub"
-    url = "https://github.com/yuqingc"
+    identifier = "source"
+    name = "Edit this page"
+    url = "https://github.com/yuqingc/yuqingc.github.io"
 
   [[menu.main]]
     identifier = "issues"
     name = "Feedback"
     url = "https://github.com/yuqingc/yuqingc.github.io/issues"
 
-  [[menu.main]]
-    identifier = "music"
-    name = "Music"
-    url = "/categories/music/"

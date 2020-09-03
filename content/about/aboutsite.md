@@ -1,5 +1,5 @@
 ---
-title: "About This Site"
+title: "About"
 date: 2019-01-17T10:37:40.065Z
 draft: false
 toc: false
@@ -10,10 +10,9 @@ categories:
 menu: main
 ---
 
-- Served by [GitHub Pages](https://pages.github.com/).
-- Powered by [Hugo](https://gohugo.io/).
-- The theme is [Mainroad](https://github.com/Vimux/Mainroad), designed by [Vimux](https://github.com/Vimux).
+- Source: https://github.com/yuqingc/yuqingc.github.io
+- Served by [GitHub Pages](https://pages.github.com/)
+- Built by [Hugo](https://gohugo.io/)
+- Hugo Theme: [Mainroad](https://github.com/Vimux/Mainroad) by [Vimux](https://github.com/Vimux)
 
-Thank you all for your amazing works ❤️.
-
-All other contents in this side are authored by [Matt (yuqingc)](https://github.com/yuqingc). All rights are reserved.
+All other contents in this page are authored by [Matt (yuqingc)](https://github.com/yuqingc). All rights are reserved.

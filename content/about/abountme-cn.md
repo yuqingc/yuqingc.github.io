@@ -1,5 +1,5 @@
 ---
-title: "About Me"
+title: "关于我"
 date: 2019-01-17T10:37:40.065Z
 draft: false
 toc: false
@@ -7,14 +7,11 @@ tags:
   - profile
 categories:
   - about
-menu: main
 ---
 
-[简体中文](/about/abountme-cn/)
-
-- Yuqing Chen (Matt)
-- Location: Hangzhou, China
-- Birth date: April 4, 1995
-- Software engineer
+- 陈宇清
+- 目前位于杭州
+- 出生：1995 年 4 月
+- Web 开发工程师
 - GitHub: [https://github.com/yuqingc](https://github.com/yuqingc)
 - Email: [mr.chenyuqing@live.com](mailto:mr.chenyuqing@live.com)

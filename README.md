@@ -2,48 +2,52 @@
 
 [![GitHubPages](https://github.com/yuqingc/yuqingc.github.io/workflows/GitHubPages/badge.svg)](https://github.com/yuqingc/yuqingc.github.io/actions)
 
-The `master` branch contains all source codes for the page. Generated contents are at the [`gh-page`](https://github.com/yuqingc/yuqingc.github.io/tree/gh-pages) branch.
+The `master` branch contains all source codes for the page. Generated contents are deployed to the [`gh-page`](https://github.com/yuqingc/yuqingc.github.io/tree/gh-pages) branch.
 
 ## Get Started
 
-- Clone & update submodules (themes)
+### Prerequisite
 
-    ```
-    $ git clone --recursive git@github.com:yuqingc/yuqingc.github.io.git
-    ```
+Install [**Hugo**](https://github.com/gohugoio/hugo/) first.
 
-- Update submodules for themes
+### Clone & update submodules (themes)
 
-    ```
-    $ git submodule update
-    ```
+```
+$ git clone --recursive git@github.com:yuqingc/yuqingc.github.io.git
+```
 
-- Write new post
+### Update submodules for themes
 
-    ```
-    $ hugo new posts/article.md
-    ```
+```
+$ git submodule update
+```
 
-- Start
+### Write new post
 
-    ```
-    $ hugo server -D
-    ```
+```
+$ hugo new posts/article.md
+```
+
+### Start server locally
+
+```
+$ hugo server -D
+```
     
-- Build
+### Build
 
-    ```
-    $ hugo
-    ```
+```
+$ hugo
+```
 
 ## Deployment
 
 ### Deploy manually
 
-    ```
-    $ ./bin/publish_to_ghpages.sh
-    ```
+```
+$ ./bin/publish_to_ghpages.sh
+```
 
-### With GitHub Actions
+### Deploy with GitHub Actions
 
-This Repository has been configured for deployment with GitHub Actions. See https://github.com/yuqingc/yuqingc.github.io/actions
+This Repository has been configured for deployment with GitHub Actions. See [Actions](https://github.com/yuqingc/yuqingc.github.io/actions).
