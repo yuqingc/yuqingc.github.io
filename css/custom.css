@@ -3,26 +3,47 @@ body {
   background-size: 400px;
 }
 
-/* Fix code snippet style under table mode */
-.highlight table pre {
-  border: none;
-  padding: 0 10px;
-}
-/* Rewrite <a> tag style in markdown content */
-.content a {
-  text-decoration: underline;
-  font-weight: 500;
+/************* START OF BACKGROUND IMAGE OVERLAY ****************/
+
+/* Set a background image for header banner, which is covered with a white overlay */
+.logo--mixed {
+  background: url("../images/skybg.jpg");
+  background-repeat: no-repeat;
+  background-size: 100% auto;
+  background-position: center center;
+  position: relative;
 }
 
-h1, h2, h3 {
-  color: #212121;
+/* Add an overlay on top of background image */
+.logo--mixed::before {    
+  content: "";
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+  background-color: rgba(255, 255, 255, 0.5);
 }
 
-code {
-  color: #2196F3;
-  background-color: #E3F2FD;
-  border-color: #BBDEFB;
-  border-radius: 4px;
+/* Set position relative so that the main content is not covered by the added overlay */
+.logo--mixed .logo__link {
+  position: relative;
+}
+
+/************* END OF BACKGROUND IMAGE OVERLAY ****************/
+
+/* Override `uppercase` with `none` */
+.logo__title,.logo__tagline,.menu__text {
+  text-transform: none;
+}
+
+.logo__tagline {
+  border-color: #BDBDBD;
+}
+
+/* Set round logo image */
+.logo__img {
+  border-radius: 100%;
 }
 
 .menu__list, .menu__btn {
@@ -56,4 +77,31 @@ code {
   color: #fff;
   background: #607D8B;
   text-decoration: none;
+}
+
+/* Fix code snippet style under table mode */
+.highlight table pre {
+  border: none;
+  padding: 0 10px;
+}
+/* Rewrite <a> tag style in markdown content */
+.content a {
+  text-decoration: underline;
+  font-weight: 500;
+}
+
+h1, h2, h3 {
+  color: #212121;
+}
+
+blockquote {
+  background: #E3F2FD;
+  padding: 6px 12px;
+}
+
+code {
+  color: #2196F3;
+  background-color: #E3F2FD;
+  border-color: #BBDEFB;
+  border-radius: 2px;
 }
