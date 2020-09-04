@@ -1,3 +1,8 @@
+body {
+  background-image: url("../images/naruto.jpg");
+  background-size: 400px;
+}
+
 /* Fix code snippet style under table mode */
 .highlight table pre {
   border: none;
