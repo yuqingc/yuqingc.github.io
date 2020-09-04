@@ -37,6 +37,10 @@ body {
   text-transform: none;
 }
 
+.logo__title {
+  color: #212121;
+}
+
 .logo__tagline {
   border-color: #BDBDBD;
 }
@@ -52,15 +56,20 @@ body {
 
 .list__title {
   color: #212121;
+  text-decoration: underline;
 }
 
-.list__lead, .post__lead {
-  color: #424242;
+.list__lead {
+  color: #424242
+}
+
+.list__excerpt {
+  color: #616161;
 }
 
 .widget__content .widget__link {
   text-decoration: underline;
-  color: #01579B;
+  color: #1976D2;
 }
 
 .widget__content .widget__link:hover {
@@ -87,7 +96,8 @@ body {
 /* Rewrite <a> tag style in markdown content */
 .content a {
   text-decoration: underline;
-  font-weight: 500;
+  font-weight: inherit;
+  color: #1976D2;
 }
 
 h1, h2, h3 {
