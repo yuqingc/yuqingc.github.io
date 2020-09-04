@@ -27,6 +27,7 @@ publishDir = "public" # Incase the default public dir change
   readmore = false # Show "Read more" button in list if true
   authorbox = true # Show authorbox at bottom of pages if true
   toc = true # Enable Table of Contents
+  pager = true # Show pager navigation (prev/next links) at the bottom of pages if true
   post_navigation = true # Show post navigation at bottom of pages if true
   post_meta = ["date", "categories", "translations"] # Order of post meta information
   mainSections = ["posts"] # specify section pages to show on home page and the "Recent articles" widget
@@ -39,7 +40,7 @@ publishDir = "public" # Incase the default public dir change
 
 [Params.logo]
   image = "images/avatar.jpg" # Logo image. Path relative to "static"
-  title = "Matt'Home" # Logo title, otherwise will use site title
+  title = "Matt's Home" # Logo title, otherwise will use site title
   subtitle = "无产阶级工人/Coder 🔨" # Logo subtitle
 
 [Params.sidebar]
@@ -47,7 +48,7 @@ publishDir = "public" # Incase the default public dir change
   list = "right"  # Configure layout for list pages
   single = "right" # Configure layout for single pages
   # Enable widgets in given order
-  widgets = ["recent", "categories", "taglist", "social", "languages"]
+  widgets = ["ddg-search", "recent", "categories", "taglist", "social", "languages"]
 
 [Params.widgets]
   recent_num = 10 # Set the number of articles in the "Recent articles" widget
@@ -74,7 +75,7 @@ publishDir = "public" # Incase the default public dir change
 
   [[menu.main]]
     identifier = "source"
-    name = "Edit this page"
+    name = "Edit This Page"
     url = "https://github.com/yuqingc/yuqingc.github.io"
 
   [[menu.main]]

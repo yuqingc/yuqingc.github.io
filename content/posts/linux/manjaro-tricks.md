@@ -154,7 +154,7 @@ Docker 安装比较简单，去 AUR 搜索即可。安装之后需要手动允�
 $ sudo systemctl enable docker
 ```
 
-### Emoji 😁 支持
+### Emoji 🤪 支持
 
 Firefox 内置了 Emoji 的支持。但是其他浏览器和应用要想显示 Emoji 需要安装 `noto-fonts-emoji`
 
