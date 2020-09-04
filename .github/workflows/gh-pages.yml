@@ -8,7 +8,6 @@ on:
       - 'README.md'
       - '.env'
       - '.gitignore'
-      - '.gitmodules'
       - 'bin'
 
 jobs:

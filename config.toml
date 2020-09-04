@@ -1,4 +1,4 @@
-baseURL = "/"
+baseURL = "https://yuqingc.github.io/"
 languageCode = "en-us"
 title = "Matt's Home"
 pygmentsCodeFences=true
