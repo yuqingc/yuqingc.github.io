@@ -12,27 +12,29 @@ categories:
 
 <!--more-->
 
-GitHub 推出了 Actions 之后，我们可以直接在 GitHub 上实现自动集成和部署，而不需要依赖第三方 CI 工具例如 TravisCI、CircleCI 等。
+GitHub 推出了 Actions 之后，我们可以直接在 GitHub 上实现自动集成和部署，而不需要依赖第三方 CI 工具，例如 TravisCI、CircleCI 等。
 
 ## 曾经踩过的坑
 
-这篇博客部署在了 [GitHub Pages](https://pages.github.com/) 上。因为使用了 [Hugo](https://gohugo.io/) 把 Markdown 文档生成静态页面，所以文章和 Hugo 的配置文件需要和生成的 HTML 代码分开存放。
+这篇博客部署在了 [GitHub Pages](https://pages.github.com/) 上。因为此网站使用了 [Hugo](https://gohugo.io/) 把 Markdown 文档生成静态页面，所以 Markdown 文章加上 Hugo 的配置文件（以下简称“源码”）需要与生成的 HTML 代码分开存放。
 
-GitHub Page 支持部署 *指定分支* 下的 *指定文件夹* 内的 HTML 内容（在仓库的 `Settings` 可以设置）。如果 *只考虑* 手动部署，有三种管理代码的方案。我们假设编译完生成的 HTML 放在名为 `public/` 的文件夹下：
+GitHub Pages 支持部署 *指定分支* 下的 *指定文件夹* 内的 HTML 内容（在仓库的 `Settings` 可以设置）。如果 *只考虑* 手动部署，有以下三种管理代码的方案（下文假定编译完生成的 HTML 的目标路径为 `public/` 文件夹）：
 
 1. 把源码和 `public/` 放在同一个分支（master），并指定 master 分支下的 `public/` 文件夹为部署的路径
 
-2. 把 `public/` 的内容单独放在主仓库，把源码放在另一个仓库，并添加 `public/` 文件夹为其 [Submodule](https://git-scm.com/docs/git-submodule)
+2. 把 `public/` 的内容单独放在主仓库，把源码放在另一个仓库，并添加 `public/` 文件夹为其 [submodule](https://git-scm.com/docs/git-submodule)
 
-3. 源码和 `public/` 存放在同一个仓库下，源码放在 master 分支，`public/` 内容放在另一个分支（如 gh-pages），并指定部署 `gh-pages` 分支的内容
+3. 源码和 `public/` 存放在同一个仓库下，源码放在 `master` 分支，`public/` 内容放在另一个分支（如 `gh-pages`），并指定部署 `gh-pages` 分支的内容
 
-方案一因为要把生成的代码和源码同时纳入版本控制，因此会使得源码很乱，不可取。
+方案一因为要把 `public/` 和源码同时纳入版本控制，因此会使得代码仓库的 commit 历史同时包含源码与 `public/` 的改动，commit 历史比较杂乱，不可取。
 
-之前一直使用的方案二，给源码单独开了一个[仓库](https://github.com/yuqingc/homepage-src)。但是需要管理 2 个代码仓库，并且 Submodule 的 commit 发生改变时，也会影响源代码仓库的 Git 历史。
+之前一直使用的方案二，我给源码单独开了一个[仓库](https://github.com/yuqingc/homepage-src)。但是需要同时管理 2 个代码仓库，并且当 submodule 的 HEAD 发生改变时，还需要同步更新源码仓库的 Git 历史。
 
-后来，我把源码迁移到了和 HTML 同一个仓库，采用了方案三。使用 [git worktree](https://git-scm.com/docs/git-worktree)，可以把同一个仓库的其他分支映射为当前工作区的一个文件夹下。这样就避免了频繁切换分支。具体操作可以参考博客的手动部署[脚本](https://github.com/yuqingc/yuqingc.github.io/blob/master/bin/publish_to_ghpages.sh)。或者参考 Hugo 关于部署的 [文档](https://gohugo.io/hosting-and-deployment/hosting-on-github/#deployment-of-project-pages-from-your-gh-pages-branch)。
+后来，我采用了方案三，把源码迁移到了主仓库。如果需要手动部署，我们可以使用 [git worktree](https://git-scm.com/docs/git-worktree)，把同一个仓库的其他分支映射为当前工作区的一个文件夹下。这样就避免了频繁切换分支。具体操作可以参考我的的手动部署[脚本](https://github.com/yuqingc/yuqingc.github.io/blob/master/bin/publish_to_ghpages.sh)。或者参考 Hugo 关于部署的 [文档](https://gohugo.io/hosting-and-deployment/hosting-on-github/#deployment-of-project-pages-from-your-gh-pages-branch)。
 
-在方案三的基础上，我们可以只用 GitHub Actions 自动构建，并且把代码部署到 gh-pages 分支。每当我们往 master 推送新的内容时，就会自动触发编译，并且，Workflow 会把编译生成的 HTML 自动部署到指定的分支。在开始行动之前，先了解一下 GitHub Action 中的一些基本概念，有助于我们了解和使用 GitHub Action。
+在方案三下，我们可以使用 GitHub Actions 自动构建 `master` 分支的源码，并且把生成的 HTML 部署到 `gh-pages` 分支。每当我们往 master 推送新的内容时，就会自动触发编译。并且，Workflow 会把编译生成的 HTML 自动部署到指定的分支。这样，我们就无需关心构建与部署的过程，每次更新文章，只需要在 `master` 分支修改 Markdown 即可。
+
+在开始行动之前，先了解一下 GitHub Action 中的一些基本概念，有助于我们了解和使用 GitHub Action。
 
 ## 一些基础概念
 
@@ -96,9 +98,9 @@ Workflow 是你为你的代码仓库配置的一套流水线的流程，包括�
 
 Workflow 包含两个概念
 
-- Workflow file 在代码仓库根目录的 `.github/workflows` 下的 YAML 配置文件
+- Workflow file：位于代码仓库根目录的 `.github/workflows` 下的 YAML 配置文件
 
-- Workflow run 一次 Workflow 运行的实例
+- Workflow run：一次 Workflow 运行的实例
 
 ### Runner
 
@@ -269,13 +271,13 @@ https://github.com/<OWNER>/<REPOSITORY>/workflows/<WORKFLOW_NAME>/badge.svg
 
 我们可以在 Workflow 中使用 GitHub [官方的 Action](https://github.com/actions/)。也可以在 GitHub 的[应用商店](https://github.com/marketplace?type=actions) 找到开源的 Action。
 
-我们的项目使用了两个第三方的 Action
+该网站使用了两个第三方的 Action：
 
-- [Hugo setup](https://github.com/marketplace/actions/hugo-setup) 依赖构建代码
+- [Hugo setup](https://github.com/marketplace/actions/hugo-setup)：依赖构建代码
 
-- [GitHub Pages action](https://github.com/marketplace/actions/github-pages-action) 用来把构建完成的内容部署到 GitHub Pages
+- [GitHub Pages action](https://github.com/marketplace/actions/github-pages-action)：用来把构建完成的内容部署到 GitHub Pages
 
-项目配置非常简单。首先在仓库的根目录创建 `.github/workflows/gh-pages.yml` 文件。如果看不懂这个文件，可以先阅读一下[上文](#一些基础概念)。
+项目配置非常简单。首先在仓库的根目录创建 `.github/workflows/gh-pages.yml` 文件。如果看不懂这个文件，可以先回头去阅读[上文](#一些基础概念)。
 
 ```yaml
 name: GitHubPages
@@ -329,7 +331,7 @@ jobs:
 
 具体配置和操作步骤可以参考文档。
 
-配置完成之后，就可以把代码 push 到 master 分支了。下次检测到 master 上代码更新的时候，就会自动触发 Workflow 了。这样就不用每次手动部署了。我们需要做的，仅仅是写文档、push。
+配置完成之后，就可以把代码 push 到 `master` 分支了。下次当 GitHub 检测到 `master` 上代码更新的时候，就会自动触发 Workflow 了。这样就不用每次手动部署了。我们需要做的，仅仅是写文档、push。
 
 ---
 *Authored by <a target="_blank" href="https://github.com/yuqingc">@yuqingc</a> 转载请注明出处*
