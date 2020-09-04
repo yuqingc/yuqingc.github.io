@@ -6,5 +6,49 @@
 /* Rewrite <a> tag style in markdown content */
 .content a {
   text-decoration: underline;
-  font-weight: 600;
+  font-weight: 500;
+}
+
+h1, h2, h3 {
+  color: #212121;
+}
+
+code {
+  color: #2196F3;
+  background-color: #E3F2FD;
+  border-color: #BBDEFB;
+  border-radius: 4px;
+}
+
+.menu__list, .menu__btn {
+  background-color: #263238;
+}
+
+.list__title {
+  color: #212121;
+}
+
+.list__lead, .post__lead {
+  color: #424242;
+}
+
+.widget__content .widget__link {
+  text-decoration: underline;
+  color: #01579B;
+}
+
+.widget__content .widget__link:hover {
+  color: #03A9F4;
+}
+
+.widget__content .btn {
+  color: #fff;
+  background: #37474F;
+  text-decoration: none;
+}
+
+.widget__content .btn:hover {
+  color: #fff;
+  background: #607D8B;
+  text-decoration: none;
 }
