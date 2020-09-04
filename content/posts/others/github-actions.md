@@ -8,7 +8,7 @@ categories:
   - notes
 ---
 
-自从用了 GitHub Actions 之后，都有时间陪女朋友了（假装有）。
+自从用了 GitHub Actions 之后，**都有时间**陪女朋友了（假装有）。
 
 <!--more-->
 

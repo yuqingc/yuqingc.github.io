@@ -34,8 +34,13 @@ publishDir = "public" # Incase the default public dir change
   #mathjax = true # Enable MathJax
   #mathjaxPath = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/MathJax.js" # Specify MathJax path
   #mathjaxConfig = "TeX-AMS-MML_HTMLorMML" # Specify MathJax config
-  #highlightColor = "#e22d30" # Override highlight color
+  highlightColor = "#1E88E5" # Override highlight color #e22d30
   customCSS = ["css/custom.css"] # Include custom CSS files
+
+[Params.logo]
+  image = "images/avatar.jpg" # Logo image. Path relative to "static"
+  title = "Matt'Home" # Logo title, otherwise will use site title
+  subtitle = "无产阶级工人/Coder 🔨" # Logo subtitle
 
 [Params.sidebar]
   home = "right" # Configure layout for home page
