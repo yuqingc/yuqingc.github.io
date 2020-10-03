@@ -19,7 +19,7 @@ $ git clone --recursive git@github.com:yuqingc/yuqingc.github.io.git
 ### Update submodules for themes
 
 ```
-$ git submodule update
+$ git submodule update --init --recursive --remote
 ```
 
 ### Write new post
