@@ -93,6 +93,12 @@ body {
   border: none;
   padding: 0 10px;
 }
+
+/* Add margin below highted table code snippets */
+.highlight>div {
+  margin-bottom: 1.25rem;
+}
+
 /* Rewrite <a> tag style in markdown content */
 .content a {
   text-decoration: underline;

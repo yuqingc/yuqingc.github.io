@@ -37,96 +37,96 @@
 </code></pre><p><em>（流程图由 <a href=http://asciiflow.com/>http://asciiflow.com/</a> 生成）</em></p><h3 id=tldr>TL;DR</h3><p>Workflow 可以在仓库根目录的 <code>.github/workflows</code> 目录下配置。一个 Workflow 至少需要包含一个 Job。一个 Job 包含了多个 Step。每个 Step 可以执行命令和脚本，也可以使用 Action。可以自己创建 Action，也可以使用社区开源的 Action。</p><h3 id=ci>CI</h3><p>CI 为持续集成（Continuous integration）。持续提交到代码仓库的代码，可以在每次提交的时候触发一些 CI 操作，例如构建、测试，以保证代码的质量。可以在 CI 提供的控制台查看日志等信息。</p><h3 id=cd>CD</h3><p>CD 为持续部署（Continuous deployment）。利用 CD 工作流，可以在代码通过 CI 测试之后，自动部署到生产环境。</p><h3 id=workflow>Workflow</h3><p>Workflow 是你为你的代码仓库配置的一套流水线的流程，包括了构建、测试、打包、发布、部署等工作。一个 Workflow 可以由若干个 <a href=#job>Job</a> 组成。Workflow 可以定时触发，也可以通过 <a href=#event>GitHub Event</a> 触发.</p><p>Workflow 包含两个概念</p><ul><li><p>Workflow file：位于代码仓库根目录的 <code>.github/workflows</code> 下的 YAML 配置文件</p></li><li><p>Workflow run：一次 Workflow 运行的实例</p></li></ul><h3 id=runner>Runner</h3><p>Runner 是安装了 GitHub Actions runner 应用程序的机器（可以是虚拟机）。每个 Runner 从等待被执行的 Job 队列中选择 Job 来执行。当 Runner 选择了一个 Job 时，Runner 会执行 Job 内的 <a href=#action>Action</a> 并上报执行过程、日志和结果。Runner 每次只执行一个 Job。</p><p>Runner 分为 GitHub 自带的 Runner 和用户自己的私人 Runner。</p><h3 id=job>Job</h3><p>Job 可以由若干个 <a href=#step>Step</a> 组成。这些 Step 在同一个 Runner 上执行。你可以在 Workflow 的配置文件定义 Job 的执行顺序和依赖关系。不同的 Job 可以同时并行运行，也可以按顺序依次执行。</p><h3 id=step>Step</h3><p>每个 Step 是一个独立的任务，可以是执行命令，也可以执行 <a href=#action>Action</a>。每个 Job 可以配置一个或多个 Step。在一个 Job 中的所有的 Step 都在一个 Runner 内执行。这样就可以使得 Job 内的 Action 可以通过文件系统来共享信息了。</p><h3 id=action>Action</h3><p>Action 是一个独立的任务，可以把多个 Action 组装成一个 Job。Action
 是 Workflow 的最小组成单元。你可以自己创建 Action，也可以使用 Action 商店内开源的 Action。<em>必须</em>要把 Action 封装在 Step 中使用。</p><h3 id=event>Event</h3><p>Event 是一些 GitHub 的事件。比如当用户 push 到代码仓库，或者发起 PR 或 Issue 时，会触发特定的 Event，从而触发 Workflow 的执行。</p><h3 id=artifact>Artifact</h3><p>Artifact 是 Workflow run 产出的文件。比如打包生成的二进制文件、测试报告、快照、日志等。产生的 Artifact 可以给另一个 Job 使用，也可以用来部署。</p><h2 id=workflow-1>Workflow</h2><h3 id=创建配置文件>创建配置文件</h3><ol><li><p>在仓库根目录创建 <code>.github/workflows</code> 文件夹用以存放配置文件</p></li><li><p>配置文件必须是 YAML 文件。后缀名是 <code>.yml</code> 或 <code>.yaml</code></p></li><li><p>配置文件的语法和格式 API 参考 <a href=https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions>语法文档</a></p></li><li><p>保存提交代码</p></li></ol><p>配置文件示例</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#75715e># .github/workflows/continuous-integration-workflow.yml</span>
 
-<span style=color:#66d9ef>name</span>: Greet Everyone
+<span style=color:#f92672>name</span>: <span style=color:#ae81ff>Greet Everyone</span>
 <span style=color:#75715e># push 到仓库会触发此 Workflow</span>
-<span style=color:#66d9ef>on</span>: [push]
+<span style=color:#f92672>on</span>: [<span style=color:#ae81ff>push]</span>
 
-<span style=color:#66d9ef>jobs</span>:
-  <span style=color:#66d9ef>build</span>:
+<span style=color:#f92672>jobs</span>:
+  <span style=color:#f92672>build</span>:
     <span style=color:#75715e># 设置 Job 名称</span>
     <span style=color:#75715e># Job name is Greeting</span>
-    <span style=color:#66d9ef>name</span>: Greeting
+    <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Greeting</span>
     <span style=color:#75715e># This job runs on Linux</span>
-    <span style=color:#66d9ef>runs-on</span>: ubuntu-latest
-    <span style=color:#66d9ef>steps</span>:
+    <span style=color:#f92672>runs-on</span>: <span style=color:#ae81ff>ubuntu-latest</span>
+    <span style=color:#f92672>steps</span>:
       <span style=color:#75715e># 使用第三方 Action</span>
       <span style=color:#75715e># This step uses GitHub&#39;s hello-world-javascript-action: https://github.com/actions/hello-world-javascript-action</span>
-      - <span style=color:#66d9ef>name</span>: Hello world
-        <span style=color:#66d9ef>uses</span>: actions/hello-world-javascript-action@v1
-        <span style=color:#66d9ef>with</span>:
-          <span style=color:#66d9ef>who-to-greet</span>: <span style=color:#e6db74>&#39;Mona the Octocat&#39;</span>
-        <span style=color:#66d9ef>id</span>: hello
+      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Hello world</span>
+        <span style=color:#f92672>uses</span>: <span style=color:#ae81ff>actions/hello-world-javascript-action@v1</span>
+        <span style=color:#f92672>with</span>:
+          <span style=color:#f92672>who-to-greet</span>: <span style=color:#e6db74>&#39;Mona the Octocat&#39;</span>
+        <span style=color:#f92672>id</span>: <span style=color:#ae81ff>hello</span>
       <span style=color:#75715e># This step prints an output (time) from the previous step&#39;s action.</span>
-      - <span style=color:#66d9ef>name</span>: Echo the greeting<span style=color:#e6db74>&#39;s time
-</span><span style=color:#e6db74>        run: echo &#39;</span>The time was ${{ steps.hello.outputs.time }}.&#39;
+      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Echo the greeting&#39;s time</span>
+        <span style=color:#f92672>run</span>: <span style=color:#ae81ff>echo &#39;The time was ${{ steps.hello.outputs.time }}.&#39;</span>
 
-</code></pre></div><p>以下是基础配置，完整配置，查看 <a href=https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions>语法文档</a></p><h3 id=触发-workflow>触发 Workflow</h3><ul><li><p>可以监听 GitHub Event，如 push</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#66d9ef>on</span>: push
-</code></pre></div></li><li><p>可以配置 Cron 来定时触发</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#66d9ef>on</span>:
-  <span style=color:#66d9ef>schedule</span>:
-    - <span style=color:#66d9ef>cron</span>: <span style=color:#e6db74>&#39;0 * * * *&#39;</span>
-</code></pre></div></li><li><p>可以手动触发（可以点击 GitHub UI 上的按钮，也可以调用 webhook 来触发），请参考文档</p></li></ul><h3 id=指定分支tag-或路径发生改变时触发>指定分支、Tag 或路径发生改变时触发</h3><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#66d9ef>on</span>:
-  <span style=color:#66d9ef>push</span>:
-    <span style=color:#66d9ef>branches</span>:
-      - master
-    <span style=color:#66d9ef>tags</span>:
-      - v1
+</code></pre></div><p>以下是基础配置，完整配置，查看 <a href=https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions>语法文档</a></p><h3 id=触发-workflow>触发 Workflow</h3><ul><li><p>可以监听 GitHub Event，如 push</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>on</span>: <span style=color:#ae81ff>push</span>
+</code></pre></div></li><li><p>可以配置 Cron 来定时触发</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>on</span>:
+  <span style=color:#f92672>schedule</span>:
+    - <span style=color:#f92672>cron</span>: <span style=color:#e6db74>&#39;0 * * * *&#39;</span>
+</code></pre></div></li><li><p>可以手动触发（可以点击 GitHub UI 上的按钮，也可以调用 webhook 来触发），请参考文档</p></li></ul><h3 id=指定分支tag-或路径发生改变时触发>指定分支、Tag 或路径发生改变时触发</h3><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>on</span>:
+  <span style=color:#f92672>push</span>:
+    <span style=color:#f92672>branches</span>:
+      - <span style=color:#ae81ff>master</span>
+    <span style=color:#f92672>tags</span>:
+      - <span style=color:#ae81ff>v1</span>
     <span style=color:#75715e># 默认监听所有的文件</span>
-    <span style=color:#66d9ef>paths</span>:
+    <span style=color:#f92672>paths</span>:
       - <span style=color:#e6db74>&#39;test/*&#39;</span>
-</code></pre></div><h3 id=指定运行环境>指定运行环境</h3><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#66d9ef>runs-on</span>: ubuntu-latest
-</code></pre></div><h3 id=配-matrix>配 Matrix</h3><p>使用 Matrix 可以使 Workflow 同时在不同的机器、系统、版本、语言下运行。详情请参考文档。</p><h3 id=使用-checkout-action>使用 <code>checkout</code> Action</h3><p>GitHub 内置了一些标准的 Action。在下列情况下必须在你的其他 Action 之前使用 <code>checkout</code> Action</p><ul><li>Workflow 需要使用代码的副本，比如需要构建、测试或使用 CI 时</li><li>至少有一个该仓库定义的 Action</li></ul><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml>- <span style=color:#66d9ef>uses</span>: actions/checkout@v2
+</code></pre></div><h3 id=指定运行环境>指定运行环境</h3><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>runs-on</span>: <span style=color:#ae81ff>ubuntu-latest</span>
+</code></pre></div><h3 id=配-matrix>配 Matrix</h3><p>使用 Matrix 可以使 Workflow 同时在不同的机器、系统、版本、语言下运行。详情请参考文档。</p><h3 id=使用-checkout-action>使用 <code>checkout</code> Action</h3><p>GitHub 内置了一些标准的 Action。在下列情况下必须在你的其他 Action 之前使用 <code>checkout</code> Action</p><ul><li>Workflow 需要使用代码的副本，比如需要构建、测试或使用 CI 时</li><li>至少有一个该仓库定义的 Action</li></ul><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml>- <span style=color:#f92672>uses</span>: <span style=color:#ae81ff>actions/checkout@v2</span>
 </code></pre></div><h3 id=选择-workflow-类型>选择 Workflow 类型</h3><p>可以选择以下类型的 Workflow。详情参考文档。</p><ul><li>Docker container actions</li><li>JavaScript actions</li><li>Composite run steps actions</li></ul><h3 id=引用-action>引用 Action</h3><p>可以在 Workflow 中引用已经定义好的 Action，如</p><ul><li><p>一个 public 仓库</p><ul><li>语法 <code>{owner}/{repo}@{ref}</code> 或 <code>{owner}/{repo}/{path}@{ref}</code></li></ul></li><li><p>当前 Workflow 文件所在仓库</p><ul><li>同一个仓库下，可以使用相对路径，如 <code>./.github/actions/hello-world-action</code></li></ul></li><li><p>在 Docker Hub 上的 Docker 镜像</p><ul><li>语法 <code>docker://{image}:{tag}</code></li></ul></li></ul><h3 id=给仓库添加-workflow-状态的图标badge>给仓库添加 Workflow 状态的图标（Badge）</h3><ul><li><p>如果 name 使用了空格等特殊字符，需要转义，如空格对应 <code>%20</code></p></li><li><p>注意 <code>&lt;WORKFLOW_NAME></code> 为 YAML 文件中的 name，而非配置文件的文件名</p></li></ul><pre><code>https://github.com/&lt;OWNER&gt;/&lt;REPOSITORY&gt;/workflows/&lt;WORKFLOW_NAME&gt;/badge.svg
 </code></pre><p>示例</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-md data-lang=md>![<span style=color:#f92672>example workflow name</span>](<span style=color:#a6e22e>https://github.com/actions/hello-world/workflows/Greet%20Everyone/badge.svg</span>)
-</code></pre></div><p>更多示例和参数，请参考文档</p><h2 id=使用第三方-action-部署博客>使用第三方 Action 部署博客</h2><p>我们可以在 Workflow 中使用 GitHub <a href=https://github.com/actions/>官方的 Action</a>。也可以在 GitHub 的<a href="https://github.com/marketplace?type=actions">应用商店</a> 找到开源的 Action。</p><p>该网站使用了两个第三方的 Action：</p><ul><li><p><a href=https://github.com/marketplace/actions/hugo-setup>Hugo setup</a>：依赖构建代码</p></li><li><p><a href=https://github.com/marketplace/actions/github-pages-action>GitHub Pages action</a>：用来把构建完成的内容部署到 GitHub Pages</p></li></ul><p>项目配置非常简单。首先在仓库的根目录创建 <code>.github/workflows/gh-pages.yml</code> 文件。如果看不懂这个文件，可以先回头去阅读<a href=#%E4%B8%80%E4%BA%9B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5>上文</a>。</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#66d9ef>name</span>: GitHubPages
+</code></pre></div><p>更多示例和参数，请参考文档</p><h2 id=使用第三方-action-部署博客>使用第三方 Action 部署博客</h2><p>我们可以在 Workflow 中使用 GitHub <a href=https://github.com/actions/>官方的 Action</a>。也可以在 GitHub 的<a href="https://github.com/marketplace?type=actions">应用商店</a> 找到开源的 Action。</p><p>该网站使用了两个第三方的 Action：</p><ul><li><p><a href=https://github.com/marketplace/actions/hugo-setup>Hugo setup</a>：依赖构建代码</p></li><li><p><a href=https://github.com/marketplace/actions/github-pages-action>GitHub Pages action</a>：用来把构建完成的内容部署到 GitHub Pages</p></li></ul><p>项目配置非常简单。首先在仓库的根目录创建 <code>.github/workflows/gh-pages.yml</code> 文件。如果看不懂这个文件，可以先回头去阅读<a href=#%E4%B8%80%E4%BA%9B%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5>上文</a>。</p><div class=highlight><pre style=color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4><code class=language-yaml data-lang=yaml><span style=color:#f92672>name</span>: <span style=color:#ae81ff>GitHubPages</span>
 
-<span style=color:#66d9ef>on</span>:
-  <span style=color:#66d9ef>push</span>:
-    <span style=color:#66d9ef>branches</span>:
-      - master  <span style=color:#75715e># 指定了用于部署的源码所在的分支</span>
-    <span style=color:#66d9ef>paths-ignore</span>:
+<span style=color:#f92672>on</span>:
+  <span style=color:#f92672>push</span>:
+    <span style=color:#f92672>branches</span>:
+      - <span style=color:#ae81ff>master  # 指定了用于部署的源码所在的分支</span>
+    <span style=color:#f92672>paths-ignore</span>:
       - <span style=color:#e6db74>&#39;README.md&#39;</span>
       - <span style=color:#e6db74>&#39;.env&#39;</span>
       - <span style=color:#e6db74>&#39;.gitignore&#39;</span>
       - <span style=color:#e6db74>&#39;.gitmodules&#39;</span>
       - <span style=color:#e6db74>&#39;bin&#39;</span>
 
-<span style=color:#66d9ef>jobs</span>:
-  <span style=color:#66d9ef>deploy</span>:
-    <span style=color:#66d9ef>runs-on</span>: ubuntu<span style=color:#ae81ff>-18.04</span>
-    <span style=color:#66d9ef>steps</span>:
-      - <span style=color:#66d9ef>uses</span>: actions/checkout@v2 <span style=color:#75715e># 上文提到了第一步必须使用 checkout Action</span>
-        <span style=color:#66d9ef>with</span>:
-          <span style=color:#66d9ef>submodules</span>: recursive  <span style=color:#75715e># 获取 Hugo 的主题，主题放在 submodule 中 (true OR recursive)</span>
-          <span style=color:#66d9ef>fetch-depth</span>: <span style=color:#ae81ff>0</span>    <span style=color:#75715e># Fetch all history for .GitInfo and .Lastmod</span>
+<span style=color:#f92672>jobs</span>:
+  <span style=color:#f92672>deploy</span>:
+    <span style=color:#f92672>runs-on</span>: <span style=color:#ae81ff>ubuntu-18.04</span>
+    <span style=color:#f92672>steps</span>:
+      - <span style=color:#f92672>uses</span>: <span style=color:#ae81ff>actions/checkout@v2 # 上文提到了第一步必须使用 checkout Action</span>
+        <span style=color:#f92672>with</span>:
+          <span style=color:#f92672>submodules</span>: <span style=color:#ae81ff>recursive  # 获取 Hugo 的主题，主题放在 submodule 中 (true OR recursive)</span>
+          <span style=color:#f92672>fetch-depth</span>: <span style=color:#ae81ff>0</span>    <span style=color:#75715e># Fetch all history for .GitInfo and .Lastmod</span>
 
-      - <span style=color:#66d9ef>name</span>: Read .env
-        <span style=color:#66d9ef>id</span>: hugo-version
-        <span style=color:#66d9ef>run</span>: | <span style=color:#75715e># 从 .env 文件中读取 HUGO 的版本号</span>
-          . ./.env
-          echo <span style=color:#e6db74>&#34;::set-output name=HUGO_VERSION::${HUGO_VERSION}&#34;</span>
+      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Read .env</span>
+        <span style=color:#f92672>id</span>: <span style=color:#ae81ff>hugo-version</span>
+        <span style=color:#f92672>run</span>: <span style=color:#ae81ff>| # 从 .env 文件中读取 HUGO 的版本号</span>
+          <span style=color:#ae81ff>. ./.env</span>
+          <span style=color:#ae81ff>echo &#34;::set-output name=HUGO_VERSION::${HUGO_VERSION}&#34;</span>
 
-      - <span style=color:#66d9ef>name</span>: Setup Hugo
-        <span style=color:#66d9ef>uses</span>: peaceiris/actions-hugo@v2 <span style=color:#75715e># 使用第三方 Action 进行构建</span>
-        <span style=color:#66d9ef>with</span>:
-          <span style=color:#66d9ef>hugo-version</span>: <span style=color:#e6db74>&#39;${{ steps.hugo-version.outputs.HUGO_VERSION }}&#39;</span>
+      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Setup Hugo</span>
+        <span style=color:#f92672>uses</span>: <span style=color:#ae81ff>peaceiris/actions-hugo@v2 # 使用第三方 Action 进行构建</span>
+        <span style=color:#f92672>with</span>:
+          <span style=color:#f92672>hugo-version</span>: <span style=color:#e6db74>&#39;${{ steps.hugo-version.outputs.HUGO_VERSION }}&#39;</span>
           <span style=color:#75715e># extended: true</span>
 
-      - <span style=color:#66d9ef>name</span>: Build
-        <span style=color:#66d9ef>run</span>: hugo --minify
+      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Build</span>
+        <span style=color:#f92672>run</span>: <span style=color:#ae81ff>hugo --minify</span>
 
-      - <span style=color:#66d9ef>name</span>: Deploy
-        <span style=color:#66d9ef>uses</span>: peaceiris/actions-gh-pages@v3 <span style=color:#75715e># 使用第三方 Action 把构建完成的 Artifact 部署到指定分支</span>
-        <span style=color:#66d9ef>with</span>:
-          <span style=color:#66d9ef>github_token</span>: ${{ secrets.GITHUB_TOKEN }}
-          <span style=color:#66d9ef>publish_branch</span>: gh-pages
+      - <span style=color:#f92672>name</span>: <span style=color:#ae81ff>Deploy</span>
+        <span style=color:#f92672>uses</span>: <span style=color:#ae81ff>peaceiris/actions-gh-pages@v3 # 使用第三方 Action 把构建完成的 Artifact 部署到指定分支</span>
+        <span style=color:#f92672>with</span>:
+          <span style=color:#f92672>github_token</span>: <span style=color:#ae81ff>${{ secrets.GITHUB_TOKEN }}</span>
+          <span style=color:#f92672>publish_branch</span>: <span style=color:#ae81ff>gh-pages</span>
 
-</code></pre></div><p>需要注意一点。在 <code>Deploy</code> 这个 Step 中使用了 <code>github_token</code>。<code>github_token</code> 是 GitHub Action 在 Workflow 中自动创建的用于权限认证的 token。使用 <code>${{ secrets.GITHUB_TOKEN }}</code> 变量可以读取到该 token，不需要额外进行配置。</p><p>权限认证除了 <code>github_token</code>，还可以使用 <code>deploy_key</code> 和 <code>personal_token</code>。这些都可以在代码仓库进行配置。</p><p>具体配置和操作步骤可以参考文档。</p><p>配置完成之后，就可以把代码 push 到 <code>master</code> 分支了。下次当 GitHub 检测到 <code>master</code> 上代码更新的时候，就会自动触发 Workflow 了。这样就不用每次手动部署了。我们需要做的，仅仅是写文档、push。</p><hr><p><em>Authored by <a target=_blank href=https://github.com/yuqingc>@yuqingc</a> 转载请注明出处</em></p></div></article></main><div class="authorbox clearfix"><figure class=authorbox__avatar><img alt="Matt avatar" src=/images/avatar.jpg class=avatar height=90 width=90></figure><div class=authorbox__header><span class=authorbox__name>About Matt</span></div><div class=authorbox__description>当我和世界初相见 当我曾经是少年</div></div><nav class="pager flex"><div class="pager__item pager__item--prev"><a class=pager__link href=/posts/go/go-module-tutorial/ rel=prev><span class=pager__subtitle>«&#8201;Previous</span><p class=pager__title>使用 Go Modules</p></a></div></nav><script src=https://utteranc.es/client.js repo=yuqingc/yuqingc.github.io issue-term=pathname label=comments theme=github-light crossorigin=anonymous async></script></div><aside class=sidebar><div class="widget-search widget"><form class=widget-search__form role=search method=get action=https://duckduckgo.com/><label><input class=widget-search__field type=search placeholder=SEARCH... name=q aria-label=SEARCH...></label>
+</code></pre></div><p>需要注意一点。在 <code>Deploy</code> 这个 Step 中使用了 <code>github_token</code>。<code>github_token</code> 是 GitHub Action 在 Workflow 中自动创建的用于权限认证的 token。使用 <code>${{ secrets.GITHUB_TOKEN }}</code> 变量可以读取到该 token，不需要额外进行配置。</p><p>权限认证除了 <code>github_token</code>，还可以使用 <code>deploy_key</code> 和 <code>personal_token</code>。这些都可以在代码仓库进行配置。</p><p>具体配置和操作步骤可以参考文档。</p><p>配置完成之后，就可以把代码 push 到 <code>master</code> 分支了。下次当 GitHub 检测到 <code>master</code> 上代码更新的时候，就会自动触发 Workflow 了。这样就不用每次手动部署了。我们需要做的，仅仅是写文档、push。</p><hr><p><em>Authored by <a target=_blank href=https://github.com/yuqingc>@yuqingc</a> 转载请注明出处</em></p></div></article></main><div class="authorbox clearfix"><figure class=authorbox__avatar><img alt="Matt avatar" src=/images/avatar.jpg class=avatar height=90 width=90></figure><div class=authorbox__header><span class=authorbox__name>About Matt</span></div><div class=authorbox__description>当我和世界初相见 当我曾经是少年</div></div><nav class="pager flex"><div class="pager__item pager__item--prev"><a class=pager__link href=/posts/go/go-module-tutorial/ rel=prev><span class=pager__subtitle>«&#8201;Previous</span><p class=pager__title>使用 Go Modules</p></a></div><div class="pager__item pager__item--next"><a class=pager__link href=/posts/js/async-events/ rel=next><span class=pager__subtitle>Next&#8201;»</span><p class=pager__title>关于 JS 的事件，你可能容易忽略了这件事</p></a></div></nav><script src=https://utteranc.es/client.js repo=yuqingc/yuqingc.github.io issue-term=pathname label=comments theme=github-light crossorigin=anonymous async></script></div><aside class=sidebar><div class="widget-search widget"><form class=widget-search__form role=search method=get action=https://duckduckgo.com/><label><input class=widget-search__field type=search placeholder=SEARCH... name=q aria-label=SEARCH...></label>
 <input class=widget-search__submit type=submit value=Search>
-<input type=hidden name=sites value=https://yuqingc.github.io/></form></div><div class="widget-recent widget"><h4 class=widget__title>Recent Posts</h4><div class=widget__content><ul class=widget__list><li class=widget__item><a class=widget__link href=/posts/others/github-actions/>使用 GitHub Actions 高效部署你的博客</a></li><li class=widget__item><a class=widget__link href=/posts/go/go-module-tutorial/>使用 Go Modules</a></li><li class=widget__item><a class=widget__link href=/posts/cheatsheets/http-cheatsheet/>Cheatsheet 系列 之 HTTP（一）</a></li><li class=widget__item><a class=widget__link href=/posts/flutter/flutter-starter/>Flutter 防坑日记</a></li><li class=widget__item><a class=widget__link href=/posts/others/yi/>周易筮算 ☯️</a></li><li class=widget__item><a class=widget__link href=/posts/others/clean-code/>代码看起来越“干净”越好？？？</a></li><li class=widget__item><a class=widget__link href=/posts/js/sse-express/>使用 Node.js 实现一个简单的 SSE 服务</a></li><li class=widget__item><a class=widget__link href=/posts/js/new-of-es2020/>What's New in ECMAScript 2020 (ES11)</a></li><li class=widget__item><a class=widget__link href=/posts/js/data-bindings-react-vue/>Thoughts of Data Bindings Strategies in React and Vue</a></li><li class=widget__item><a class=widget__link href=/posts/js/snippets01/>Useful JavaScript Snippets</a></li></ul></div></div><div class="widget-categories widget"><h4 class=widget__title>Categories</h4><div class=widget__content><ul class=widget__list><li class=widget__item><a class=widget__link href=/categories/about/>about</a></li><li class=widget__item><a class=widget__link href=/categories/blogs/>blogs</a></li><li class=widget__item><a class=widget__link href=/categories/music/>music</a></li><li class=widget__item><a class=widget__link href=/categories/notes/>notes</a></li><li class=widget__item><a class=widget__link href=/categories/quotes/>quotes</a></li></ul></div></div><div class="widget-taglist widget"><h4 class=widget__title>Tags</h4><div class=widget__content><a class="widget-taglist__link widget__link btn" href=/tags/cheatsheet/ title=cheatsheet>cheatsheet (1)</a>
+<input type=hidden name=sites value=https://yuqingc.github.io/></form></div><div class="widget-recent widget"><h4 class=widget__title>Recent Posts</h4><div class=widget__content><ul class=widget__list><li class=widget__item><a class=widget__link href=/posts/js/async-events/>关于 JS 的事件，你可能容易忽略了这件事</a></li><li class=widget__item><a class=widget__link href=/posts/others/github-actions/>使用 GitHub Actions 高效部署你的博客</a></li><li class=widget__item><a class=widget__link href=/posts/go/go-module-tutorial/>使用 Go Modules</a></li><li class=widget__item><a class=widget__link href=/posts/cheatsheets/http-cheatsheet/>Cheatsheet 系列 之 HTTP（一）</a></li><li class=widget__item><a class=widget__link href=/posts/flutter/flutter-starter/>Flutter 防坑日记</a></li><li class=widget__item><a class=widget__link href=/posts/others/yi/>周易筮算 ☯️</a></li><li class=widget__item><a class=widget__link href=/posts/others/clean-code/>代码看起来越“干净”越好？？？</a></li><li class=widget__item><a class=widget__link href=/posts/js/sse-express/>使用 Node.js 实现一个简单的 SSE 服务</a></li><li class=widget__item><a class=widget__link href=/posts/js/new-of-es2020/>What's New in ECMAScript 2020 (ES11)</a></li><li class=widget__item><a class=widget__link href=/posts/js/data-bindings-react-vue/>Thoughts of Data Bindings Strategies in React and Vue</a></li></ul></div></div><div class="widget-categories widget"><h4 class=widget__title>Categories</h4><div class=widget__content><ul class=widget__list><li class=widget__item><a class=widget__link href=/categories/about/>about</a></li><li class=widget__item><a class=widget__link href=/categories/blogs/>blogs</a></li><li class=widget__item><a class=widget__link href=/categories/music/>music</a></li><li class=widget__item><a class=widget__link href=/categories/notes/>notes</a></li><li class=widget__item><a class=widget__link href=/categories/quotes/>quotes</a></li></ul></div></div><div class="widget-taglist widget"><h4 class=widget__title>Tags</h4><div class=widget__content><a class="widget-taglist__link widget__link btn" href=/tags/cheatsheet/ title=cheatsheet>cheatsheet (1)</a>
 <a class="widget-taglist__link widget__link btn" href=/tags/flutter/ title=flutter>flutter (1)</a>
 <a class="widget-taglist__link widget__link btn" href=/tags/go/ title=go>go (1)</a>
 <a class="widget-taglist__link widget__link btn" href=/tags/http/ title=http>http (1)</a>
-<a class="widget-taglist__link widget__link btn" href=/tags/javascript/ title=javascript>javascript (7)</a>
+<a class="widget-taglist__link widget__link btn" href=/tags/javascript/ title=javascript>javascript (8)</a>
 <a class="widget-taglist__link widget__link btn" href=/tags/linux/ title=linux>linux (1)</a>
 <a class="widget-taglist__link widget__link btn" href=/tags/manjaro/ title=manjaro>manjaro (1)</a>
 <a class="widget-taglist__link widget__link btn" href=/tags/music/ title=music>music (3)</a>
