@@ -79,7 +79,7 @@ console.log('1b');
 
 通过 JS 触发的事件，和 `EventTarget.dispatchEvent()` 一样，是**同步**触发的。我们先看一下[文档](https://developer.mozilla.org/en-US/docs/Web/API/EventTarget/dispatchEvent)的描述：
 
->Unlike "native" events, which are fired by the DOM and invoke event handlers asynchronously via the (event loop)[https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop], `dispatchEvent()` invokes event handlers synchronously. All applicable event handlers will execute and return before the code continues on after the call to `dispatchEvent()`.
+>Unlike "native" events, which are fired by the DOM and invoke event handlers asynchronously via the [event loop](https://developer.mozilla.org/en-US/docs/Web/JavaScript/EventLoop), `dispatchEvent()` invokes event handlers synchronously. All applicable event handlers will execute and return before the code continues on after the call to `dispatchEvent()`.
 >
 > 不像“原生”事件被 DOM 触发，然后通过事件循环来异步执行处理函数，`dispatchEvent()` 同步地调用事件处理函数。所有的可以执行的回调函数会在调用 `dispatchEvent()` 后执行，然后在代码继续之前返回。
 
