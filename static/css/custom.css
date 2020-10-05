@@ -7,22 +7,11 @@ body {
 
 /* Set a background image for header banner, which is covered with a white overlay */
 .logo--mixed {
-  background: url("../images/skybg.jpg");
+  background-image: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.5)), url("../images/skybg.jpg");
   background-repeat: no-repeat;
   background-size: 100% auto;
   background-position: center center;
   position: relative;
-}
-
-/* Add an overlay on top of background image */
-.logo--mixed::before {    
-  content: "";
-  position: absolute;
-  top: 0px;
-  right: 0px;
-  bottom: 0px;
-  left: 0px;
-  background-color: rgba(255, 255, 255, 0.5);
 }
 
 /* Set position relative so that the main content is not covered by the added overlay */
