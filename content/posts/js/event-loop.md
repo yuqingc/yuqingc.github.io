@@ -165,7 +165,7 @@ setTimeout(() => {
 
 - 运行至第二个 `setTimeout()` 函数，同理，将回调函数推送至任务队列
 
-- 第二个 ``setTimeout()` 返回时，调用栈清空，此时 Event Loop 会检查任务队列是否为空
+- 第二个 `setTimeout()` 返回时，调用栈清空，此时 Event Loop 会检查任务队列是否为空
 
 - 任务队列不为空，取出并执行第一个任务，打印 `"timer1"`
 
