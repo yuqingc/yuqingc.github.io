@@ -177,11 +177,11 @@ setTimeout(() => {
 
 - Microtask 队列空，Event Loop 继续执行下一个任务队列中的任务
 
-- 同理，依次打印出 `"timer2"` 和 `promise2`
+- 同理，依次打印出 `"timer2"` 和 `"promise2"`
 
 ### `setTimeout(fn, 0)` 的问题
 
-其实现在的浏览器在执行 `setTimeout()` 和 `setInterval` 时，会设定一个最小的时间阀值，一般是 4ms。
+其实现在的浏览器在执行 `setTimeout()` 和 `setInterval()` 时，会设定一个最小的时间阀值，一般是 4ms。
 
 浏览器的不活跃标签内的时间阀值，有些浏览器会设置为 1000ms。
 
