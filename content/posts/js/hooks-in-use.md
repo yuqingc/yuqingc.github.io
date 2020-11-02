@@ -24,7 +24,7 @@ draft: false
 
 先看一个防抖的例子。我们监听 `value` 的变化，并在其发生改变时执行一些操作，如 `doSomething()`。
 
-```js
+```jsx
 const HookExample = () => {
   const [value, setValue] = useState('');
 
