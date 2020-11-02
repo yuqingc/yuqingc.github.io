@@ -1,10 +1,10 @@
 ---
-title: "Hooks 实战 & 防坑（WIP，持续更新中）"
+title: "Hooks 实战 & 防坑"
 date: 2020-10-22T13:50:29+08:00
 draft: false
 ---
 
-使用 Hook 需要尝试丢弃 Class 组件开发的思维。
+使用 Hook 需要尝试丢弃 Class 组件开发的思维。本文假设你了解 Hook 的基本用法和 API。
 
 <!--more-->
 
@@ -183,6 +183,28 @@ useEffect(() => {
 
 这样使用同样也是 ok 的（但是比较麻烦，不推荐这样使用）。
 
+当然，我们也可以使用 `useRef` 来实时保存当前的值（推荐使用）
+
+```js
+const prefValueRef = useRef();
+
+useEffect(() => {
+  prevValueRef.current = value;
+}, [value]);
+
+useEffect(() => {
+  const id = setTimeout(() => {
+    console.log(prevValueRef.current);
+  }, 3000);
+
+  return () => clearTimeout(id);
+}, []);
+```
+
+> **注意：**
+>
+> 这里保存值的变量名为 `prevValueRef` 其实是有用意的。虽然保存的是当前的值，但是如果在返回的 element 中展示这个值，会呈现上次渲染的值。可以用[这种方法](https://reactjs.org/docs/hooks-faq.html#how-to-get-the-previous-props-or-state)来获取*上一次* state 的值。
+
 ## 3. 计时器问题
 
 实现一个可以自增的定时器并不难：
@@ -309,7 +331,103 @@ const IntervalExample = () => {
 };
 ```
 
-## 4. 使用自定义 Hook 抽离可复用逻辑
+## 4. 使用 `useCallback` 和 `ref` 来获取 DOM 元素
+
+一般情况下，使用 `React.createRef()` 或者 `React.useRef()` 没有问题。我们在 `componentDidMount()` 或 `useEffect()`（把依赖设为 `[]`）中便可以获取 DOM 元素。但是，如果需要获取 DOM 元素的组件并不是刚开始就 render 出来的，比如手动触发显示。举例：
+
+```jsx
+function Example () {
+  const [height, setHeight] = useState(0);
+  const [show, setShow] = useState(false);
+
+  const measuredRef = useCallback(node => {
+    if (node !== null) {
+      setHeight(node.getBoundingClientRect().height);
+    }
+  }, []);
+
+  return (
+    <>
+      {show && <h1 ref={measuredRef}>Hello, world</h1>}
+      <h2>The above header is {Math.round(height)}px tall</h2>
+      <button onClick={() => setShow(true)}>Show</button>
+    </>
+  );
+}
+```
+
+使用 `useCallback` 并设置依赖为 `[]` 可以保证回调函数只执行一次。参考 https://reactjs.org/docs/hooks-faq.html#how-can-i-measure-a-dom-node
+
+## 5. Function 组件不能使用 Ref？
+
+一般来说，无法给 Function 组件设置 Ref。但是我们结合使用下列 API 来达到和 Class 组件类似的效果
+
+- [`React.forwardRef`](https://reactjs.org/docs/react-api.html#reactforwardref) 用来暴露 Function 组件内部的 Ref 给父组件
+
+- [`useImperativeHandle`](https://reactjs.org/docs/hooks-reference.html#useimperativehandle) 用来实现“classInstance.method()” 调用 Class 组件实例方法类似的效果
+
+详情点击上面的链接查看文档 👆
+
+## 6. 懒加载 `useState` 和 `useRef` 的初始值
+
+### 懒加载 `useState`
+
+- 当 state 的初始值需要通过复杂计算得出，或者数据结构比较复杂，可以使用返回初始值的函数，作为其参数。详情参考 `useState` 的 API。
+
+```js
+function Table(props) {
+  // createRows() 只会执行一次
+  const [rows, setRows] = useState(() => createRows(props.count));
+  // ...
+}
+```
+
+### `useRef` 的初始值
+
+`useRef` 不用于 `useState`，不能传入一个回调函数来懒加载初始值。如果传入一个函数的调用，那么每次 render 都会调用。我们来验证一下：
+
+```js
+let v = 0;
+
+function foo() {
+  v = v + 1;
+  console.log('执行 foo', v);
+  return v;
+}
+
+const Example = () => {
+  const someRef = useRef(foo());
+  console.log('当前值', someRef.current);
+
+  // 剩下的代码省略
+}
+```
+
+我们可以看到，每次 render 时，`foo` 函数都会执行，但是 `someRef.current` 的值永远是第一次计算获取的值，即 `1`。
+
+来看一下前面提到过防抖例子的代码：
+
+```js {linenos=table,hl_lines=["1-3"]}
+const deSomethingDebounced = useRef(debounce(arg => {
+  console.log(arg);
+}, 1000));
+useEffect(() => deSomethingDebounced.current(value), [value]);
+```
+
+其实，在每次 render 时，伴随着组件函数的执行，`debounce` 函数都会执行，只是后面执行的返回结果会被丢弃。`useRef` 仅仅保留第一次执行的结果。其实，这样会造成无用的函数调用，影响性能。我们可以手动初始化 `deSomethingDebounced` 的值，来对代码进行优化。
+
+```js
+const deSomethingDebounced: any = useRef();
+// 手动初始化，避免重复计算
+useEffect(() => {
+  deSomethingDebounced.current = debounce(arg => {
+    console.log(arg);
+  }, 1000);
+}, []);
+useEffect(() => deSomethingDebounced.current(value), [value]);
+```
+
+## n. 使用自定义 Hook 抽离可复用逻辑
 
 >先占个坑，有空继续完善和更新
 
