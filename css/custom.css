@@ -109,3 +109,9 @@ code {
   border-color: #BBDEFB;
   border-radius: 2px;
 }
+
+/* Table of Contents styles */
+.post__toc .toc__menu #TableOfContents>ul>li>ul {
+  padding-left: 12px;
+  font-weight: 500;
+}
