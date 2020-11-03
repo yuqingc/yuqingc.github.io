@@ -1,5 +1,5 @@
 ---
-title: "Hooks 实战 & 防坑"
+title: "Hooks 实战 & 防坑 & 优化"
 date: 2020-10-22T13:50:29+08:00
 draft: false
 ---
@@ -91,6 +91,8 @@ useEffect(() => deSomethingDebounced.current(value), [value]);
 
 这样就符合预期了。
 
+> 其实，上述代码还有优化空间，请参考下文[`useRef` 的初始值](#useref-的初始值)
+
 **注意添加清理函数，避免造成内存泄漏**
 
 ```js {linenos=table,hl_lines=["8"]}
@@ -102,6 +104,20 @@ useEffect(() => {
   deSomethingDebounced.current(value);
 
   return deSomethingDebounced.current.cancel;
+}, [value]);
+```
+
+除此之外，React 为我们提供了一个专门用来缓存函数的 Hook，使用 `useCallback()` 会更加简单。
+
+```js
+const deSomethingDebounced = useCallback(debounce(arg => {
+  console.log(arg);
+}, 1000), []);
+
+useEffect(() => {
+  deSomethingDebounced(value);
+
+  return deSomethingDebounced.cancel;
 }, [value]);
 ```
 
