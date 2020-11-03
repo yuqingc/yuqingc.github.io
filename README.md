@@ -50,4 +50,4 @@ $ ./bin/publish_to_ghpages.sh
 
 ### Deploy with GitHub Actions
 
-This Repository has been configured for deployment with GitHub Actions. See [Actions](https://github.com/yuqingc/yuqingc.github.io/actions).
+This repository has been configured for deployment with GitHub Actions. See [Actions](https://github.com/yuqingc/yuqingc.github.io/actions).
