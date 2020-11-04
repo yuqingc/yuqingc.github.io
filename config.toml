@@ -1,25 +1,100 @@
 baseURL = "https://yuqingc.github.io/"
 languageCode = "en-us"
-title = "Matt's Home"
 pygmentsCodeFences=true
 theme = "Mainroad"
 paginate = "10" # Number of posts per page
 summaryLength = 50
 hasCJKLanguage = true # To make summary displays correctly
 publishDir = "public" # Incase the default public dir change
+DefaultContentLanguage = "zh-cn"
+
+# Language configs
+[languages]
+  [languages.zh-cn]
+    title = "CYQ 博客"
+    contentDir = "content/zh-cn"
+    languageName = "简体中文"
+    weight = 1
+
+    [languages.zh-cn.Params]
+      subtitle = "" # Subtitle of your site. Used in site header
+
+    [languages.zh-cn.Params.logo]
+      image = "images/avatar.jpg" # Logo image. Path relative to "static"
+      title = "CYQ 博客" # Logo title, otherwise will use site title
+      subtitle = "无产阶级工人/Coder 🔨" # Logo subtitle
+
+    [languages.zh-cn.menu]
+      [[languages.zh-cn.menu.main]]
+        identifier = "source-cn"
+        name = "编辑"
+        url = "https://github.com/yuqingc/yuqingc.github.io"
+        weight = 103
+
+      [[languages.zh-cn.menu.main]]
+        identifier = "issues-cn"
+        name = "反馈"
+        url = "https://github.com/yuqingc/yuqingc.github.io/issues"
+        weight = 104
+
+      [[languages.zh-cn.menu.main]]
+        identifier = "goen"
+        name = "English"
+        url = "/en"
+        weight = 105
+
+    [languages.zh-cn.Author] # Used in authorbox
+      name = "CYQ"
+      bio = "当我和世界初相见 当我曾经是少年"
+      avatar = "images/avatar.jpg"
+
+  # English Lang Configs
+  [languages.en]
+    title = "Matt's Home"
+    contentDir = "content/en"
+    languageName = "English"
+    weight = 2
+
+    [languages.en.Params]
+      subtitle = "Coder 🔨" # Subtitle of your site. Used in site header
+
+    [languages.en.Params.logo]
+      image = "images/avatar.jpg" # Logo image. Path relative to "static"
+      title = "Matt's Home" # Logo title, otherwise will use site title
+      subtitle = "I might be coding right now... 🔨" # Logo subtitle
+
+    [languages.en.menu]
+      [[languages.en.menu.main]]
+        identifier = "source-en"
+        name = "Edit This Page"
+        url = "https://github.com/yuqingc/yuqingc.github.io"
+        weight = 103
+
+      [[languages.en.menu.main]]
+        identifier = "issues-en"
+        name = "Feedback"
+        url = "https://github.com/yuqingc/yuqingc.github.io/issues"
+        weight = 104
+
+      [[languages.en.menu.main]]
+        identifier = "gocn"
+        name = "简体中文"
+        url = "/zh-cn"
+        weight = 105
+
+    [languages.en.Author] # Used in authorbox
+      name = "Matt"
+      bio = "Keep going & Stay young"
+      avatar = "images/avatar.jpg"
+
+############################# NON-LANG CONFIGS ##################################
 
 [markup]
   [markup.goldmark]
     [markup.goldmark.renderer]
       unsafe = true # enable html in markdown files
 
-[Author] # Used in authorbox
-  name = "Matt"
-  bio = "当我和世界初相见 当我曾经是少年"
-  avatar = "images/avatar.jpg"
-
 [Params]
-  subtitle = "无产阶级工人/Coder 🔨" # Subtitle of your site. Used in site header
   description = "John Doe's Personal blog about everything" # Site description. Used in meta description
   copyright = "yuqingc" # copyright holder, otherwise will use site title
   opengraph = true # Enable OpenGraph if true
@@ -38,17 +113,12 @@ publishDir = "public" # Incase the default public dir change
   highlightColor = "#1E88E5" # Override highlight color #e22d30
   customCSS = ["css/custom.css"] # Include custom CSS files
 
-[Params.logo]
-  image = "images/avatar.jpg" # Logo image. Path relative to "static"
-  title = "Matt's Home" # Logo title, otherwise will use site title
-  subtitle = "无产阶级工人/Coder 🔨" # Logo subtitle
-
 [Params.sidebar]
   home = "right" # Configure layout for home page
   list = "right"  # Configure layout for list pages
   single = "right" # Configure layout for single pages
   # Enable widgets in given order
-  widgets = ["ddg-search", "recent", "categories", "taglist", "social", "languages"]
+  widgets = ["ddg-search", "recent", "taglist", "categories", "social"]
 
 [Params.widgets]
   recent_num = 10 # Set the number of articles in the "Recent articles" widget
@@ -70,16 +140,3 @@ publishDir = "public" # Incase the default public dir change
   title = "(゜-゜)つロ 干杯~"
   url = "https://space.bilibili.com/76849204"
   icon = "bilibili.svg"
-
-[menu]
-
-  [[menu.main]]
-    identifier = "source"
-    name = "Edit This Page"
-    url = "https://github.com/yuqingc/yuqingc.github.io"
-
-  [[menu.main]]
-    identifier = "issues"
-    name = "Feedback"
-    url = "https://github.com/yuqingc/yuqingc.github.io/issues"
-
