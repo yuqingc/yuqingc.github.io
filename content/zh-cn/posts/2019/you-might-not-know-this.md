@@ -17,8 +17,6 @@ tags:
 # menu: main # Optional, add page to a menu. Options: main, side, footer
 ---
 
-<a target="_blank" href="https://zhuanlan.zhihu.com/p/37911534"><h3>中文版请戳我</h3></a>
-
 ## 动机
 
 如果你熟悉 [React.js](https://reactjs.org)，你一定知道知道，如果你像下面这样写事件监听函数，浏览器一定会给你报语法错误
