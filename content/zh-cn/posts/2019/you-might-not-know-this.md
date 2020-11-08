@@ -1,5 +1,5 @@
 ---
-title: "【待迁移】React 和 this"
+title: "React 和 this"
 date: 2019-06-21T12:13:37+08:00
 draft: false
 # description: "Example article description"
@@ -19,9 +19,9 @@ tags:
 
 <a target="_blank" href="https://zhuanlan.zhihu.com/p/37911534"><h3>中文版请戳我</h3></a>
 
-## Motivation
+## 动机
 
-If you are familiar with [React.js](https://reactjs.org), you should know that if you add an event listener to an element like the following, you get a syntax error when you try triggering the `click` event.
+如果你熟悉 [React.js](https://reactjs.org)，你一定知道知道，如果你像下面这样写事件监听函数，浏览器一定会给你报语法错误
 
 ```jsx
 // JSX
@@ -38,15 +38,15 @@ class Test extends React.Component {
 }
 ```
 
-The browser is expected to warn you: `Uncaught TypeError: Cannot read property 'setState' of undefined` on clicking the `button`.
+此时如果你点击 `<button>` 按钮，浏览器就会告诉你 `Cannot read property 'setState' of undefined`。
 
-We know that you can avoid this issue by explicitly binding `this` of the `handleClick` function (or method) to the `Test` class in two ways, either by using an `arrow function` (`() => {}`) or by using JavaScript's `Function.prototype.bind()` built-in method. I'll explain that in later sections.
+我们知道你可以通过 `bind` 方法或者箭头函数来强制绑定 `this` 来避免这个问题。我们在下面的章节中会提到箭头函数。
 
 ```jsx
 <button onClick={handleClick.bind(this)}></button>
 ```
 
-or
+或者
 
 ```javascript
 handleClick = () => {
@@ -54,31 +54,32 @@ handleClick = () => {
 }
 ```
 
-You know that if `this` is not bound to the current object, an error raises. Plus, you know you can solve this issue. However, have you ever considered the following questions:
+如果 `this` 没有绑定到当前对象，那么浏览器就会报错。而且你也知道如何来绑定 `this`。但是你考虑过下面几个问题吗？
 
-- What object does `this` refer to in this case? `undefined` or a global object such as `window`? (Apparently `undefined` according to the above *error*)
+- 此时 `this` 到底指向了谁？是 `undefined` 还是全局对象，比如 `window`？（根据前面提到的浏览器报错信息，答案显然是 `undefined`）
 
-- Why does the component instance lose the `this` reference to itself?
+- 为什么 React 组件的实例会失去指向它本身的 `this` 指向？
 
-- Is this a "JavaScript" behavior or a "React" behavior?
+- 这是 JavaScript 语言本身导致的还是 React 的内部某些原因导致的呢？
 
-## Self exploration
+## 自我探索
 
-Before our exploration, let's see how React.js [official document](https://reactjs.org/docs/handling-events.html) says:
+在进行自我探索之前，让我们看一下[官方文档](https://zh-hans.reactjs.org/docs/handling-events.html)是怎么说的：
 
-> This is not React-specific behavior; it is a part of [how functions work in JavaScript](https://www.smashingmagazine.com/2014/01/understanding-javascript-function-prototype-bind/). Generally, if you refer to a method without `()` after it, such as `onClick={this.handleClick}`, you should bind that method.
 
-Thus, the last question in the previous section is solved. *This* is not about React; it's about JavaScript.
+> 这并不是 React 特有的行为；这其实与 [JavaScript 函数工作原理](https://www.smashingmagazine.com/2014/01/understanding-javascript-function-prototype-bind/)有关。通常情况下，如果你没有在方法后面添加 `()`，例如 `onClick={this.handleClick}`，你应该为这个方法绑定 `this`。
 
-Now, take a look at the two snippets of codes below, and consider what the outputs are. If you are not sure what the result is, you might as well test it with [Node.js](https://nodejs.org/en/) or Chrome Browser.
+因此，上一节的最后一个问题解决了。`this` 的行为和 React 无关，这是一个 JS 语言本身的特性。
 
-Code snippet One:
+现在，我们来看一下下面两段代码，然后思考一下输出结果是什么。如果你不确定输出结果是什么，你可以在 Node.js 或者 Chrome 浏览器中跑一下试一试。
+
+代码一：
 
 ```javascript
-// javascript with ES6 class syntax
+// 使用 ES6 的 class 语法
 class Cat {
   sayThis () {
-    console.log(this); // what is this `this` refer to?
+    console.log(this); // 这里的 `this` 指向谁？
   }
 
   exec (cb) {
@@ -91,15 +92,15 @@ class Cat {
 }
 
 const tom = new Cat();
-tom.render(); // what is the output?
+tom.render(); // 输出结果是什么？
 ```
 
-Code snippet Two:
+代码一：
 
 ```javascript
 const jerry = {
   sayThis: function () {
-    console.log(this); // what is this `this` refer to?
+    console.log(this); // 这里的 `this` 指向谁？
   },
 
   exec: function (cb) {
@@ -111,20 +112,20 @@ const jerry = {
   },
 }
 
-jerry.render(); // what is the output?
+jerry.render(); // 输出结果是什么？
 ```
 
-The output of Code snippet One is `undefined`, which is exactly the same as the example in the first section. This indicates that the undefined `this` reference is resulted from JavaScript instead of React.
+代第一段代码的结果是 `undefined`，这和第一节中 React 出现的结果完全一致。这代表 `this` 指向了 `undefined`。其实是 JS 的行为而并非 React。
 
-The output of Code snippet Two is the global object of the runtime environment in which you run your code, which is the `window` object of the browser and the `global` object of Node.js.
+第二段代码的结果是，你所使用的环境里面的全局对象——在浏览器中就是 `window` 对象，在 Node.js 中就是 `global` 对象。
 
-You might get confused the first time you saw the output result. What the hell did `this` do?
+你看到输出结果的时候，一定感到很困惑吧？到底 `this` 干了什么？？
 
-## `this` in JavaScript
+## JS 中的 `this`
 
-### Simple scenarios where `this` dose not refer to the object in which the  method is defined
+### `this` 不指向定义它的函数的那个对象的情形
 
-Take a look at the following case
+看下面的例子
 
 ```javascript
 var name = 'Global'
@@ -143,13 +144,13 @@ greetCopy(); // Chrome: Hello, I am  Fish
 // Node.js: Hello, I am undefined
 ```
 
-When `greet` is called with the dot (`.`) operator -- `fish.greet()`, `this` refers to `fish`, which is exactly where the `greet` method is defined. `fish` is called *caller* in this scenario.
+当你使用“点”操作符 `.` 来调用 `greet` 函数的时候，`fish.greet()`，`this` 指向了 `fish`，`fish` 正是定义了 `greet` 方法的那个对象。在这种情况下，我们称 `fish` 是这个函数的调用者。
 
-In fact, `fish.greet` is just a normal function in the memory. No matter where it is defined, it can be re-assigned to another variable such as `greetCopy` in the above example. If you print `fish.greet` and `greetCopy` with `console.log`, you will get the same thing in the console.
+事实上，`fish.greet` 在内存中只是一个普通的函数。不管它是在什么对象中定义的，它都可以和普通的函数一样，赋值给另一个变量，比如前面的 `greetCopy`。如果你用 `console.log` 打印 `console.log(fish.greet)` 或者 `console.log(greetCopy)`，控制台输出的结果都是一样的。
 
-If you call a function without an explicit caller, like `greetCopy`, JavaScript interpreter treats the global object as caller. In this way, `greetCopy()` works exactly the same as `greetCopy.call(window)` in Chrome and `greetCopy.call(global)` in Node.js.
+如果你不用调用者显式地调用一个函数，JS 的解释器就会把全局对象当作调用者。所以 `greetCopy()` 这个语句在 Chrome 中的行为就和 `greetCopy.call(window)` 是一样的，在 Node.js 中就和 `greetCopy.call(global)` 是一样的。
 
-There is an exception. `this` in function calls without a caller are never assigned to the global object in *strict mode*. In *strict mode*, an **Error** raises if you try calling `greetCopy()` because `this` refers to nothing -- `undefined`.
+但是有一种例外，如果你使用了严格模式，那么没有显式的使用调用者 的情况下，`this` 永远不会自动绑定到全局对象上。如果此时你调用 `greetCopy`，你就会得到报错，因为这时候 `this` 不指向任何对象，`this` 这时候就是 `undefined`。
 
 ```javascript
 'use strict';
@@ -169,12 +170,12 @@ const greetCopy = fish.greet;
 greetCopy(); // Uncaught TypeError: Cannot read property 'name' of undefined
 ```
 
-Note that in the above case, `greetCopy()` behaves in different ways in Chrome and in Node.js. `this.name` is `undefined` in Node.js as you saw. Variables are automatically assigned to an attribute of the global object if you define them in the most top scope of your code in a browser environment. On the contrary, Node.js does not assign the global variable as an attribute of the global object unless you do it explicitly with the statement `global.name = 'Global'`.
+注意，在上面这种情况下，`greetCopy` 在 Chrome 中和在 Node.js 中行为不太一样。正如你看到的那样，在 Node.js 中，`this.name` 的值是 `undefined`。在浏览器中，如果你在最外层作用于定义了一个变量，它就会自动变成全局对象的一个属性。相反，在 Node.js 中，最外层对象不会自动被赋给全局对象，除非你显式地使用 `global.name = 'Global'`。
 
-What if you want to call `fish.greet` with another *caller* other than `fish`? `Function.prototype.call` is needed.
+如果我想使用另一个对象作为调用者来调用 `fish.greet`，我该怎么做？这时候就要用到 `Function.prototype.call`。
 
 ```javascript
-// In the context of previous code snippet
+// 前面代码一的上下文
 
 const pig = {
   name: "Pig"
@@ -182,7 +183,8 @@ const pig = {
 
 fish.greet.call(pig); // Hello, I am  Pig
 ```
-The `call` method forces to bind `this` inside its `caller`(`fish.greet`) to the `pig` object, which is `call`'s argument.
+
+`call` 方法强制性地把 `fish.greet` 的调用者绑定到了 `pig` 对象上，`pig` 这时候用作 `this` 方法的参数。
 
 
 ```javascript
@@ -190,9 +192,9 @@ console.log(fish.greet); // function () { … }
 console.log(greetCopy); // function () { … }
 ```
 
-### `this` in callback function
+### 回调函数中的 `this`
 
-*callback* function is a function as the argument of another function. See the example below.
+*回调函数*简单的来说，就是把一个函数作为另一函数的参数，并且在另一个函数执行的时候调用这个函数。看一下下面的例子：
 
 ```javascript
 var name = 'Global';
@@ -208,19 +210,19 @@ function exec(cb) {
     cb();
 }
 
-exec(matt.sayName); // `Global` in browser and `undefined` in Node.js
+exec(matt.sayName); // // `Global` (浏览器), `undefined` (Node.js)
 ```
 
-If you read the previous section, the output result is easy for you to understand. Let's take a look what happens when the interpreter invokes the `exec()` function.
+如果你阅读了上面的章节，这个输出结果对你来说就很好理解了。我们来看一下在解释器调用 `exec()` 函数的时候都做了什么。
 
-When the process steps into the `exec` function, the actual argument `matt.sayName` is assigned to the formal argument `cb`. This is just like the assignment statement in the previous section: `const greetCopy = fish.greet;`. There is no explicit caller when `cb` in called, so `this` refers to the global object in *non-strict mode* or `undefined` in *strict mode*.
+当这个程序运行到 exec 函数的时候，实参 `matt.sayName` 被传递给了形参 `cb`。这就和前面的章节中说的赋值语句的情况类似：`const greetCopy = fish.greet;`。这里 `cb` 在调用的时候并没有显式的调用者，所以此时，`this` 在非严格模式下就会指向全局对象，在严格模式下就会指向 `undefined`。
 
-Let's take a look at another similar example. Consider what the result is.
+我们来看一下另一个很相似的情形。思考一下结果是什么？
 
 ```javascript
 const jerry = {
   sayThis: function () {
-    console.log(this); // what is this `this` refer to?
+    console.log(this); // `this` 指向什么？
   },
 
   exec: function (cb) {
@@ -232,30 +234,32 @@ const jerry = {
   },
 }
 
-jerry.render(); // what is the output?
+jerry.render(); // 输出结果是什么？
 ```
 
-Yes. You saw this in the last chapter! I think you might know why the output is the global object.
+是的！你在上一章中看到了这个例子了。你现在一定知道了为什么输出结果是全局对象了吧！
 
-Even if we call `exec` with the dot (`.`) operator explicitly, the `cb` function still does not have a explicit caller. Thus, you will get `this` referring to the global object.
+即使我们使用点操作符. 来显式地调用 exec 方法，然而 cb 函数仍然没有一个显式的调用者。因此，你就会看到 this 指向了全局对象。
 
-In addition, when you use an ES6 class syntax, all code inside of class declarations runs in strict mode automatically. 
+> 注意：
+>
+>如果你使用了 ES6 的 class 语法，所有在 class 中声明的方法都会自动地使用严格模式
 
-When you bind an event listener with `onClick={this.handleClick}`, the `handleClick` function is actually passed to the `addEventListener()` method as a callback argument. This is why you get `undefined` other than `window` or the Component's instance in the event handler callback functions of a React Component.
+当你使用 `onClick={this.handleClick}` 来绑定事件监听函数的时候，`handleClick` 函数实际上会作为回调函数，传入 `addEventListener()`。这就是为什么你在 React 的组件中添加事件处理函数为什么会得到 `undefined` 而不是全局对象或者别的什么东西。
 
-### Arrow functions
+### 箭头函数
 
-Arrow functions make `this` more simple and straightforward.
+箭头函数使得 `this` 更简单和直接。
 
-Remembering one rule is enough. You should understand it after you read all above.
+关于箭头函数的资料其实很多，在这里我就不多说了。你只要记住一个规则就足够了，如果你仔细阅读了上文，你应该能理解这个规则
 
-> *'this' is always bound to the scope where the function that includes 'this' is defined.*
+> `this` 永远绑定了定义箭头函数所在的那个对象
 
-For more information about `this` in arrow functions, refer to [You Don't Know JS: ES6 & Beyond](https://github.com/getify/You-Dont-Know-JS/blob/master/es6%20%26%20beyond/ch2.md#arrow-functions)
+关于箭头函数中 this 的更详细的解说，你可以参考[你不知道的JavaScript 之 ES6 箭头函数](https://github.com/getify/You-Dont-Know-JS/blob/1ed-zh-CN/es6%20&%20beyond/ch2.md#%E7%AE%AD%E5%A4%B4%E5%87%BD%E6%95%B0)
 
-Therefore, we solve the issue at the very beginning with an arrow function.
+这样我们就可以使用箭头函数来解决文章开头的问题了。
 
-##  References
+##  参考资料
 
 - [Chapter: this & Object Prototypes in *You Don't Know JS*, by Kyle Simpson](https://github.com/getify/You-Dont-Know-JS/blob/master/this%20%26%20object%20prototypes/ch2.md)
 
