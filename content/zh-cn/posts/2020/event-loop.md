@@ -181,9 +181,9 @@ setTimeout(() => {
 
 ### `setTimeout(fn, 0)` 的问题
 
-其实现在的浏览器在执行 `setTimeout()` 和 `setInterval()` 时，会设定一个最小的时间阀值，一般是 4ms。
+其实现在的浏览器在执行 `setTimeout()` 和 `setInterval()` 时，会设定一个最小的时间阈值，一般是 4ms。
 
-浏览器的不活跃标签内的时间阀值，有些浏览器会设置为 1000ms。
+浏览器的不活跃标签内的时间阈值，有些浏览器会设置为 1000ms。
 
 可以通过 `window.postMessage()` 来模拟实现真正的 0 秒延迟的 `setTimeout`。实现代码可以参考 https://dbaron.org/log/20100309-faster-timeouts
 
@@ -297,7 +297,7 @@ Node.js 和 Chrome 浏览器一样，使用了 V8 作为 JS 的解释器。但�
 
 上图是 Node.js 中 Event Loop 的一个基本流程，使用 libuv 实现。其中每个方框代表一个阶段（phase）：
 
-- Event Loop 首先会进入 *timer* 阶段，在此阶段执行定时器 `setTimeout()` 和 `setInterval()` 的回调。查看设定的时间阀值是否已经超时，如果超时，则会依次执行回调。注意实际运行的时间往往比设定的阀值要大。如果到达时间阀值，其他任务没有完成，那么回调会等待当前任务结束之后才会执行。
+- Event Loop 首先会进入 *timer* 阶段，在此阶段执行定时器 `setTimeout()` 和 `setInterval()` 的回调。查看设定的时间阈值是否已经超时，如果超时，则会依次执行回调。注意实际运行的时间往往比设定的阈值要大。如果到达时间阈值，其他任务没有完成，那么回调会等待当前任务结束之后才会执行。
 
 - *pending callbacks* 阶段主要执行一些系统触发的时间，例如 TCP 连接异常错误 `ECONNREFUSED` 的通知
 
@@ -395,9 +395,9 @@ Node 10 及以下版本基本是按照上述流程处理代码的，当执行该
 
 > 在 Node v11 中，nextTick 和 microtasks 会在每个单独的 setTimeout 之间 或每个 setImmediate 之间执行。尽管此时 timers queue 或 immediates queue 不为空。在 node v11 版本中，setTimeout 和 promise的行为 与浏览器一致，使浏览器 javascript 代码的运行结果跟 Node 一致。然而，这种新的改变可能会打破现有的 Nodejs 应用程序，这些应用程序显然依赖于旧的行为。因此，如果您要升级到节点 v11 或更高版本（最好是 LTS v12），您要认真考虑。
 
-### Node.js 中 `setTimeout()` 阀值
+### Node.js 中 `setTimeout()` 阈值
 
-在 Node.js 中，`setTimeout()` 和 `setInterval()` 的设定的时间如果大于 2147483647 或小于 1，则会被强制设定为 1ms。因此，可以理解为，在 Node.js 中，`setTimeout()` 的最小时间阀值是 1 ms。
+在 Node.js 中，`setTimeout()` 和 `setInterval()` 的设定的时间如果大于 2147483647 或小于 1，则会被强制设定为 1ms。因此，可以理解为，在 Node.js 中，`setTimeout()` 的最小时间阈值是 1 ms。
 
 ### `setTimeout(fn, 0)` 和 `setImmediate()` 的回调谁先执行？
 
@@ -411,13 +411,13 @@ setImmediate(() => console.log('2'));
 
 实际运行会发现，打印的顺序并不是固定的。代码执行的过程可以理解为下列步骤：
 
-- `setTimeout()` 会设定定时器，时间阀值为 1ms
+- `setTimeout()` 会设定定时器，时间阈值为 1ms
 
 - `setImmediate()` 会把函数放入 immediate 队列
 
 - 当 Event Loop 执行到 timer 阶段时，此时有 2 种情况
 
-  - 1ms 的时间阀值已经过去，将回调放入 timer 队列并执行
+  - 1ms 的时间阈值已经过去，将回调放入 timer 队列并执行
 
   - 1ms 时间尚未达到，进入后面的阶段，直至 check 阶段执行 immediate 回调
 
