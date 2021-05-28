@@ -11,7 +11,7 @@ DefaultContentLanguage = "zh-cn"
 # Language configs
 [languages]
   [languages.zh-cn]
-    title = "CYQ 博客"
+    title = "黑人de问号🌚❓"
     contentDir = "content/zh-cn"
     languageName = "简体中文"
     weight = 1
@@ -20,8 +20,8 @@ DefaultContentLanguage = "zh-cn"
       subtitle = "" # Subtitle of your site. Used in site header
 
     [languages.zh-cn.Params.logo]
-      image = "images/avatar.jpg" # Logo image. Path relative to "static"
-      title = "CYQ 博客" # Logo title, otherwise will use site title
+      image = "images/avatar.png" # Logo image. Path relative to "static"
+      title = "黑人de问号🌚❓" # Logo title, otherwise will use site title
       subtitle = "无产阶级工人/Coder 🔨" # Logo subtitle
 
     [languages.zh-cn.menu]
@@ -44,9 +44,9 @@ DefaultContentLanguage = "zh-cn"
         weight = 105
 
     [languages.zh-cn.Author] # Used in authorbox
-      name = "CYQ"
-      bio = "当我和世界初相见 当我曾经是少年"
-      avatar = "images/avatar.jpg"
+      name = "黑人de问号🌚❓"
+      bio = "雨下整夜..."
+      avatar = "images/avatar.png"
 
   # English Lang Configs
   [languages.en]
@@ -59,7 +59,7 @@ DefaultContentLanguage = "zh-cn"
       subtitle = "Coder 🔨" # Subtitle of your site. Used in site header
 
     [languages.en.Params.logo]
-      image = "images/avatar.jpg" # Logo image. Path relative to "static"
+      image = "images/avatar.png" # Logo image. Path relative to "static"
       title = "Matt's Home" # Logo title, otherwise will use site title
       subtitle = "I might be coding right now... 🔨" # Logo subtitle
 
@@ -84,8 +84,8 @@ DefaultContentLanguage = "zh-cn"
 
     [languages.en.Author] # Used in authorbox
       name = "Matt"
-      bio = "Keep going & Stay young"
-      avatar = "images/avatar.jpg"
+      bio = "Why you always in a mood?"
+      avatar = "images/avatar.png"
 
 ############################# NON-LANG CONFIGS ##################################
 
