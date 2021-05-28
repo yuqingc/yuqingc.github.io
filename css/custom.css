@@ -1,5 +1,5 @@
 body {
-  background-image: url("../images/naruto.jpg");
+  /* background-image: url("../images/naruto.jpg"); */
   background-size: 400px;
 }
 
@@ -7,11 +7,12 @@ body {
 
 /* Set a background image for header banner, which is covered with a white overlay */
 .logo--mixed {
-  background-image: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.5)), url("../images/skybg.jpg");
+  background-color: #fefefe;
+  /* background-image: linear-gradient(rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.5)), url("../images/skybg.jpg");
   background-repeat: no-repeat;
   background-size: 100% auto;
   background-position: center center;
-  position: relative;
+  position: relative; */
 }
 
 /* Set position relative so that the main content is not covered by the added overlay */
