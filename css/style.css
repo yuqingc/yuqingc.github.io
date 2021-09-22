@@ -795,20 +795,24 @@ button:not(:-moz-focusring):focus > .menu__btn-title {
 	list-style: none;
 }
 
-.toc__menu ul ul ul a {
+.toc__menu li li a {
 	padding-left: 25px;
 }
 
-.toc__menu ul ul ul ul a {
+.toc__menu li li li a {
 	padding-left: 45px;
 }
 
-.toc__menu ul ul ul ul ul a {
+.toc__menu li li li li a {
 	padding-left: 65px;
 }
 
-.toc__menu ul ul ul ul ul ul a {
+.toc__menu li li li li li a {
 	padding-left: 85px;
+}
+
+.toc__menu li li li li li li a {
+	padding-left: 105px;
 }
 
 .toc__menu li {
@@ -1068,6 +1072,16 @@ textarea {
 
 .widget__item:first-child {
 	padding-top: 0;
+}
+
+.widget__counter--bubble {
+	display: inline-block;
+	padding: 0 6px;
+	font-size: .75rem;
+	color: #666;
+	text-align: center;
+	background: #ebebeb;
+	border-radius: 2em;
 }
 
 /* Search widget */
